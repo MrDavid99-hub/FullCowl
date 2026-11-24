@@ -1,0 +1,37 @@
+{
+  "formato": 1,
+  "creadoCon": "Full Cowl 1.4.0",
+  "nombre": "Kali y objetivo",
+  "descripcion": "Prácticas de seguridad: una máquina Kali para atacar y un Ubuntu con Apache como objetivo. Úsalo solo con tus propias máquinas.",
+  "red": {
+    "tipo": "nat",
+    "direcciones": "dhcp"
+  },
+  "dominio": null,
+  "desechable": true,
+  "ping": true,
+  "maquinas": [
+    {
+      "base": "Kali",
+      "cantidad": 1,
+      "ram": 4096,
+      "cpus": 2,
+      "vram": 128,
+      "controlador": false,
+      "extras": [],
+      "etiquetas": []
+    },
+    {
+      "base": "Ubuntu2404",
+      "cantidad": 1,
+      "ram": 2048,
+      "cpus": 2,
+      "vram": 0,
+      "controlador": false,
+      "extras": [
+        "apache"
+      ],
+      "etiquetas": []
+    }
+  ]
+}

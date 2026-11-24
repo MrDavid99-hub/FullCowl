@@ -1,0 +1,217 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Full Cowl · Primera configuración" Width="1080" Height="700" MinWidth="940" MinHeight="640"
+        WindowStartupLocation="CenterScreen" FontSize="13" UseLayoutRounding="True" SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Ideal">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="340"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- Panel izquierdo: marca y pasos -->
+    <Border Grid.Column="0" ClipToBounds="True">
+      <Border.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+          <GradientStop Color="{DynamicResource K_menuA}" Offset="0"/>
+          <GradientStop Color="{DynamicResource K_menuB}" Offset="1"/>
+        </LinearGradientBrush>
+      </Border.Background>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="32,40,32,0" HorizontalAlignment="Left">
+          <Image x:Name="AsLogo" Width="130" Height="130" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="HighQuality"/>
+          <Image x:Name="AsTitulo" Height="22" HorizontalAlignment="Left" Margin="0,18,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+          <TextBlock Text="Máquinas virtuales de VMware" Foreground="{DynamicResource T_menuAcento}" FontSize="12.5" Margin="0,8,0,0"/>
+        </StackPanel>
+        <StackPanel x:Name="AsPasos" Grid.Row="1" Margin="32,40,24,32" VerticalAlignment="Center"/>
+        <Border x:Name="AsRayos" Grid.RowSpan="2" IsHitTestVisible="False"/>
+      </Grid>
+    </Border>
+
+    <!-- Panel derecho: contenido del paso y pie fijo -->
+    <Grid Grid.Column="1" Background="{DynamicResource T_fondo}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="0,0,8,0">
+        <Grid Margin="48,40,40,24">
+
+          <!-- 0 · Bienvenida -->
+          <StackPanel x:Name="Paso0" VerticalAlignment="Center" Margin="0,60,0,0">
+            <TextBlock Text="Te damos la bienvenida a Full Cowl" FontSize="32" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap"/>
+            <TextBlock Text="Vamos a dejar este PC listo para crear tus máquinas virtuales." FontSize="16" Foreground="{DynamicResource T_textoSuave}" Margin="0,12,0,0" TextWrapping="Wrap"/>
+            <Button x:Name="BtnAsEmpezar" Style="{StaticResource BotonPrimario}" Content="Empezar" Height="42" MinWidth="150" HorizontalAlignment="Left" Margin="0,32,0,0"/>
+          </StackPanel>
+
+          <!-- 1 · Tu PC -->
+          <StackPanel x:Name="Paso1" Visibility="Collapsed">
+            <TextBlock Text="Tu PC" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Comprobamos que tienes lo necesario. Lo que falte se puede instalar desde aquí (menos VMware)." Foreground="{DynamicResource T_textoSuave}" Margin="0,6,0,18" TextWrapping="Wrap"/>
+            <StackPanel x:Name="AsChecks"/>
+            <ProgressBar x:Name="AsInstalarBarra" Height="6" IsIndeterminate="True" Margin="0,4,0,0" Visibility="Collapsed"/>
+            <TextBlock x:Name="AsInstalarTexto" Style="{StaticResource Nota}" Margin="0,8,0,0" TextWrapping="Wrap"/>
+            <Button x:Name="BtnAsRecomprobar" Style="{StaticResource BotonSecundario}" Content="Volver a comprobar" Height="34" HorizontalAlignment="Left" Margin="0,14,0,0"/>
+          </StackPanel>
+
+          <!-- 2 · Carpetas -->
+          <StackPanel x:Name="Paso2" Visibility="Collapsed">
+            <TextBlock Text="Carpetas" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Dónde tienes las ISO de los sistemas y dónde quieres guardar las máquinas. Se guarda solo en este PC." Foreground="{DynamicResource T_textoSuave}" Margin="0,6,0,18" TextWrapping="Wrap"/>
+            <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,16">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de ISOs"/>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <TextBox x:Name="AsIsos" Style="{StaticResource Campo}"/>
+                  <Button x:Name="BtnAsIsos" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+                </Grid>
+                <TextBlock x:Name="AsIsosNota" Style="{StaticResource Nota}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                <WrapPanel x:Name="AsIsosPildoras" Margin="0,8,0,0"/>
+              </StackPanel>
+            </ContentControl>
+            <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de máquinas"/>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <TextBox x:Name="AsVms" Style="{StaticResource Campo}"/>
+                  <Button x:Name="BtnAsVms" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+                </Grid>
+                <TextBlock x:Name="AsVmsNota" Style="{StaticResource Nota}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                <TextBlock x:Name="AsVmsLibre" FontWeight="Medium" Foreground="{DynamicResource T_texto}" Margin="0,6,0,0"/>
+              </StackPanel>
+            </ContentControl>
+          </StackPanel>
+
+          <!-- 3 · Tus máquinas -->
+          <StackPanel x:Name="Paso3" Visibility="Collapsed">
+            <TextBlock Text="Tus máquinas" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="El usuario y la contraseña que tendrán las máquinas que crees." Foreground="{DynamicResource T_textoSuave}" Margin="0,6,0,18" TextWrapping="Wrap"/>
+            <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Rotulo}" Text="Usuario"/>
+                <TextBox x:Name="AsUsuario" Style="{StaticResource Campo}" MaxWidth="320" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="AsUsuarioNota" Style="{StaticResource Nota}" Margin="0,5,0,0" TextWrapping="Wrap" Text="Minúsculas, números, guion o guion bajo, empezando por letra."/>
+
+                <Grid Margin="0,16,0,0">
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                  <StackPanel>
+                    <TextBlock Style="{StaticResource Rotulo}" Text="Contraseña"/>
+                    <Grid>
+                      <PasswordBox x:Name="AsPw1" Style="{StaticResource CampoClave}"/>
+                      <TextBox x:Name="AsPw1Ver" Style="{StaticResource Campo}" Visibility="Collapsed"/>
+                      <ToggleButton x:Name="BtnAsVer" Style="{StaticResource BotonOjo}" HorizontalAlignment="Right" Margin="0,0,3,0" ToolTip="Mostrar u ocultar mientras la escribes"/>
+                    </Grid>
+                  </StackPanel>
+                  <StackPanel Grid.Column="2">
+                    <TextBlock Style="{StaticResource Rotulo}" Text="Repítela"/>
+                    <Grid>
+                      <PasswordBox x:Name="AsPw2" Style="{StaticResource CampoClave}"/>
+                      <TextBox x:Name="AsPw2Ver" Style="{StaticResource Campo}" Visibility="Collapsed"/>
+                    </Grid>
+                  </StackPanel>
+                </Grid>
+                <StackPanel Margin="0,12,0,0">
+                  <TextBlock x:Name="AsReg1" FontSize="12.5" Margin="0,0,0,3"/>
+                  <TextBlock x:Name="AsReg2" FontSize="12.5" Margin="0,0,0,3"/>
+                  <TextBlock x:Name="AsReg3" FontSize="12.5" Margin="0,0,0,3"/>
+                  <TextBlock x:Name="AsReg4" FontSize="12.5"/>
+                </StackPanel>
+                <TextBlock x:Name="AsPwActual" Style="{StaticResource Nota}" Margin="0,10,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
+                <TextBlock Style="{StaticResource Nota}" Margin="0,10,0,0" TextWrapping="Wrap"
+                           Text="Se guarda cifrada con tu usuario de Windows, solo en este PC. Full Cowl no la enseña nunca ni la deja en ningún archivo legible."/>
+                <CheckBox x:Name="AsPwLuego" Style="{StaticResource Casilla}" Content="Prefiero ponerla cuando cree mi primera máquina" Margin="0,14,0,0"/>
+              </StackPanel>
+            </ContentControl>
+          </StackPanel>
+
+          <!-- 4 · Tu aspecto -->
+          <StackPanel x:Name="Paso4" Visibility="Collapsed">
+            <TextBlock Text="Tu aspecto" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Se ve al momento. Puedes cambiarlo cuando quieras en Ajustes." Foreground="{DynamicResource T_textoSuave}" Margin="0,6,0,18" TextWrapping="Wrap"/>
+            <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18">
+              <StackPanel>
+                <TextBlock Style="{StaticResource Rotulo}" Text="¿Cómo te llamamos?"/>
+                <TextBox x:Name="AsNombre" Style="{StaticResource Campo}" MaxWidth="320" HorizontalAlignment="Left"/>
+                <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Es el saludo de Inicio. Vacío: el nombre de tu usuario de Windows."/>
+
+                <TextBlock Style="{StaticResource Rotulo}" Text="Tema" Margin="0,18,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                  <RadioButton x:Name="AsTemaClaro" Style="{StaticResource Chip}" GroupName="AsTema" Content="Claro"/>
+                  <RadioButton x:Name="AsTemaOscuro" Style="{StaticResource Chip}" GroupName="AsTema" Content="Oscuro"/>
+                  <RadioButton x:Name="AsTemaAuto" Style="{StaticResource Chip}" GroupName="AsTema" Content="Automático (el de Windows)"/>
+                </StackPanel>
+
+                <TextBlock Style="{StaticResource Rotulo}" Text="Color" Margin="0,18,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                  <StackPanel x:Name="AsMuestras" Orientation="Horizontal"/>
+                </StackPanel>
+                <CheckBox x:Name="AsSobrio" Style="{StaticResource Casilla}" Content="Modo sobrio (todo en gris, para clase)" Margin="0,10,0,0"/>
+
+                <TextBlock Style="{StaticResource Rotulo}" Text="Actualizaciones" Margin="0,18,0,7"/>
+                <StackPanel Orientation="Horizontal">
+                  <RadioButton x:Name="AsActAvisar" Style="{StaticResource Chip}" GroupName="AsAct" Content="Avisarme"/>
+                  <RadioButton x:Name="AsActSolo" Style="{StaticResource Chip}" GroupName="AsAct" Content="Actualizar solo"/>
+                  <RadioButton x:Name="AsActNo" Style="{StaticResource Chip}" GroupName="AsAct" Content="No buscar"/>
+                </StackPanel>
+                <TextBlock x:Name="AsActNota" Style="{StaticResource Nota}" Margin="0,6,0,0" TextWrapping="Wrap"/>
+              </StackPanel>
+            </ContentControl>
+          </StackPanel>
+
+          <!-- 5 · Listo -->
+          <StackPanel x:Name="Paso5" Visibility="Collapsed">
+            <TextBlock x:Name="AsListoTitulo" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap"/>
+            <TextBlock Text="Esto es lo que has dejado configurado en este PC." Foreground="{DynamicResource T_textoSuave}" Margin="0,6,0,14"/>
+            <ContentControl Style="{StaticResource Tarjeta}" Padding="22,16">
+              <StackPanel x:Name="AsResumen"/>
+            </ContentControl>
+            <TextBlock Text="¿Qué quieres hacer ahora?" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,22,0,10"/>
+            <Button x:Name="BtnAsBase" Style="{StaticResource TarjetaClic}" MinHeight="0" Margin="0,0,0,10" Padding="18,13">
+              <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Crear mi primera base" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+                  <Border CornerRadius="9" Background="{DynamicResource T_campo}" Padding="8,1" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Recomendado" FontSize="11.5" FontWeight="Medium" Foreground="{DynamicResource T_acento}"/>
+                  </Border>
+                </StackPanel>
+                <TextBlock Text="Instala un sistema desde su ISO. De ella saldrán todas tus máquinas." FontSize="12.5" Foreground="{DynamicResource T_textoSuave}" Margin="0,3,0,0"/>
+              </StackPanel>
+            </Button>
+            <Button x:Name="BtnAsImportar" Style="{StaticResource TarjetaClic}" MinHeight="0" Margin="0,0,0,10" Padding="18,13">
+              <StackPanel>
+                <TextBlock Text="Importar una máquina" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+                <TextBlock Text="Trae una máquina ya hecha (.ova o carpeta) de otro PC." FontSize="12.5" Foreground="{DynamicResource T_textoSuave}" Margin="0,3,0,0"/>
+              </StackPanel>
+            </Button>
+            <Button x:Name="BtnAsInicio" Style="{StaticResource TarjetaClic}" MinHeight="0" Margin="0,0,0,10" Padding="18,13">
+              <StackPanel>
+                <TextBlock Text="Ir a Inicio" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+                <TextBlock Text="Lo demás lo haces cuando quieras." FontSize="12.5" Foreground="{DynamicResource T_textoSuave}" Margin="0,3,0,0"/>
+              </StackPanel>
+            </Button>
+          </StackPanel>
+
+        </Grid>
+      </ScrollViewer>
+
+      <!-- Pie fijo -->
+      <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" Padding="40,14">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <TextBlock x:Name="AsPie" Style="{StaticResource Nota}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+          <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <Button x:Name="BtnAsAtras" Style="{StaticResource BotonSecundario}" Content="Atrás" MinWidth="104" Height="36"/>
+            <Button x:Name="BtnAsSiguiente" Style="{StaticResource BotonPrimario}" Content="Siguiente" MinWidth="120" Height="36" Margin="8,0,0,0" IsDefault="True"/>
+          </StackPanel>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

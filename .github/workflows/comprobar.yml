@@ -1,0 +1,81 @@
+# Comprobacion automatica (ficha 31). Se ejecuta en cada subida y en cada pull request a main.
+# Solo lee el codigo: permisos minimos, sin publicar nada y sin usar ramas externas con acceso a secretos
+# (por eso es «pull_request» y no «pull_request_target»: los secretos no llegan a los forks).
+name: Comprobar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    name: Comprobaciones (Python)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Los patrones privados llegan por un secreto del repositorio (PATRONES_PRIVADOS) y se vuelcan a un
+      # archivo temporal que no se sube (esta en .gitignore). Sin el secreto, esa comprobacion se salta.
+      - name: Preparar patrones privados
+        env:
+          PATRONES_PRIVADOS: ${{ secrets.PATRONES_PRIVADOS }}
+        run: |
+          if [ -n "$PATRONES_PRIVADOS" ]; then
+            printf '%s\n' "$PATRONES_PRIVADOS" > herramientas/privado.txt
+          else
+            echo "::warning title=Cadenas privadas::No hay secreto PATRONES_PRIVADOS: se salta la busqueda de cadenas privadas."
+          fi
+
+      - name: Comprobar
+        run: python herramientas/comprobar.py
+
+  sintaxis-powershell:
+    name: Sintaxis de PowerShell 5.1
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      # Analisis real con el analizador de Windows PowerShell 5.1 (exacto, a diferencia de contar llaves) y
+      # comprobacion de que cada .ps1 lleva el BOM de UTF-8.
+      - name: Analizar los .ps1
+        shell: powershell
+        run: |
+          $errores = 0
+          $raiz = (Get-Location).Path
+          $archivos = Get-ChildItem -Path $raiz -Recurse -Filter *.ps1 -File |
+              Where-Object { $_.FullName -notmatch '[\\/]\.git[\\/]' } | Sort-Object FullName
+          function Escapar([string]$t) { return ($t -replace '%', '%25' -replace "`r", '%0D' -replace "`n", '%0A') }
+          foreach ($a in $archivos) {
+              $rel = $a.FullName.Substring($raiz.Length + 1).Replace('\', '/')
+              $bytes = [IO.File]::ReadAllBytes($a.FullName)
+              # instalar.ps1 de la raiz va SIN BOM a proposito (se ejecuta con "irm | iex", ficha 33)
+              if ($rel -ne 'instalar.ps1' -and -not ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)) {
+                  Write-Host "::error file=$rel,line=1::Falta el BOM de UTF-8 (sin el, PowerShell 5.1 rompe los acentos)."
+                  $errores++
+              }
+              $tokens = $null
+              $fallos = $null
+              [void][System.Management.Automation.Language.Parser]::ParseFile($a.FullName, [ref]$tokens, [ref]$fallos)
+              foreach ($f in $fallos) {
+                  $msg = Escapar $f.Message
+                  Write-Host "::error file=$rel,line=$($f.Extent.StartLineNumber),col=$($f.Extent.StartColumnNumber)::$msg"
+                  $errores++
+              }
+          }
+          Write-Host "$($archivos.Count) archivos .ps1 analizados, $errores errores."
+          if ($errores -gt 0) { exit 1 }

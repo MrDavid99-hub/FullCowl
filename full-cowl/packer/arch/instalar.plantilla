@@ -1,0 +1,68 @@
+#!/bin/bash
+# Instalación desatendida de Arch Linux (crear-base.ps1 la genera y Packer la sirve por HTTP).
+# La ISO de Arch la descarga y la ejecuta sola al arrancar gracias a «script=» en la línea de arranque.
+set -e
+exec > >(tee /root/fullcowl-instalar.log) 2>&1
+echo "== Full Cowl: instalando Arch Linux =="
+loadkeys es || true
+timedatectl set-ntp true || true
+
+# Primer disco de verdad (el único de la VM)
+DISCO=$(lsblk -dpno NAME,TYPE | awk '$2=="disk"{print $1; exit}')
+[ -n "$DISCO" ] || { echo "ERROR: no encuentro el disco"; exit 1; }
+echo "Disco: $DISCO"
+wipefs -af "$DISCO"
+parted -s "$DISCO" mklabel msdos mkpart primary ext4 1MiB 100% set 1 boot on
+sleep 2
+PART="${DISCO}1"
+[ -b "$PART" ] || PART="${DISCO}p1"
+mkfs.ext4 -F "$PART"
+mount "$PART" /mnt
+
+# Espejo fiable delante de la lista (si no, a veces el primero va lento)
+echo 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' | cat - /etc/pacman.d/mirrorlist > /tmp/mirrorlist
+cp /tmp/mirrorlist /etc/pacman.d/mirrorlist
+
+for intento in 1 2 3 4; do
+  pacstrap -K /mnt base linux linux-firmware grub networkmanager openssh open-vm-tools sudo nano vim bash-completion {{PAQUETES}} && break
+  echo "pacstrap fallo (intento $intento de 4), reintento en 20 s..."; sleep 20
+done
+[ -x /mnt/bin/bash ] || { echo "ERROR: no se pudo instalar el sistema base"; exit 1; }
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Contraseña temporal de un solo uso (la real llega en el primer arranque de cada máquina)
+cat > /mnt/root/.pw <<'PW'
+{{USER}}:{{PASS}}
+PW
+chmod 600 /mnt/root/.pw
+echo "$DISCO" > /mnt/root/.disco
+
+arch-chroot /mnt /bin/bash -e <<'CHROOT'
+ln -sf /usr/share/zoneinfo/{{ZONA}} /etc/localtime
+hwclock --systohc
+sed -i 's/^#{{LOCALE}}/{{LOCALE}}/' /etc/locale.gen
+locale-gen
+echo 'LANG={{LOCALE}}' > /etc/locale.conf
+echo 'KEYMAP={{TECLADO}}' > /etc/vconsole.conf
+echo '{{HOSTNAME}}' > /etc/hostname
+printf '127.0.0.1 localhost\n::1 localhost\n127.0.1.1 {{HOSTNAME}}\n' > /etc/hosts
+useradd -m -G wheel -s /bin/bash {{USER}}
+chpasswd < /root/.pw
+rm -f /root/.pw
+passwd -l root
+echo '%wheel ALL=(ALL:ALL) ALL' > /etc/sudoers.d/10-wheel
+chmod 440 /etc/sudoers.d/10-wheel
+# SSH: entrada por contraseña (para Packer y para Full Cowl); root no
+mkdir -p /etc/ssh/sshd_config.d
+printf 'PermitRootLogin no\nPasswordAuthentication yes\n' > /etc/ssh/sshd_config.d/10-fullcowl.conf
+systemctl enable sshd NetworkManager vmtoolsd
+systemctl enable vmware-vmblock-fuse || true
+{{ESCRITORIO}}
+grub-install --target=i386-pc "$(cat /root/.disco)"
+rm -f /root/.disco
+grub-mkconfig -o /boot/grub/grub.cfg
+CHROOT
+
+echo "== Instalacion terminada: reiniciando =="
+umount -R /mnt || true
+reboot

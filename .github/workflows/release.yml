@@ -1,0 +1,46 @@
+# Release automatica (ficha 33). Al subir una etiqueta vX.Y.Z: comprueba el codigo (ficha 31), construye
+# Full-Cowl.zip, MANIFIESTO.txt y SHA256SUMS.txt con herramientas/crear-release.py y los adjunta a la Release.
+# Nunca hay Release si la comprobacion no sale en verde. Permisos minimos: solo escribir la Release.
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Crear la Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Comprobar (ficha 31)
+        run: python herramientas/comprobar.py
+
+      - name: La etiqueta coincide con VERSION
+        run: |
+          v="$(tr -d '\r\n\357\273\277' < VERSION)"
+          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::La etiqueta $GITHUB_REF_NAME no coincide con VERSION ($v)."
+            exit 1
+          fi
+
+      - name: Construir el ZIP, el manifiesto y las sumas
+        run: python herramientas/crear-release.py --salida dist
+
+      - name: Publicar la Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/Full-Cowl.zip dist/MANIFIESTO.txt dist/SHA256SUMS.txt \
+            --title "Full Cowl ${GITHUB_REF_NAME#v}" --notes-file dist/notas.md --verify-tag

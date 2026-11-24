@@ -1,0 +1,38 @@
+{
+  "formato": 1,
+  "creadoCon": "Full Cowl 1.4.0",
+  "nombre": "Servidor web y cliente",
+  "descripcion": "Un Ubuntu Server con Apache y MariaDB y un Ubuntu con escritorio para probarlo desde el navegador. Los extras necesitan Internet (red NAT).",
+  "red": {
+    "tipo": "nat",
+    "direcciones": "dhcp"
+  },
+  "dominio": null,
+  "desechable": true,
+  "ping": true,
+  "maquinas": [
+    {
+      "base": "Ubuntu2404",
+      "cantidad": 1,
+      "ram": 2048,
+      "cpus": 2,
+      "vram": 0,
+      "controlador": false,
+      "extras": [
+        "apache",
+        "mariadb"
+      ],
+      "etiquetas": []
+    },
+    {
+      "base": "Ubuntu2404Desk",
+      "cantidad": 1,
+      "ram": 4096,
+      "cpus": 2,
+      "vram": 128,
+      "controlador": false,
+      "extras": [],
+      "etiquetas": []
+    }
+  ]
+}

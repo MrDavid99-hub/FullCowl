@@ -1,0 +1,226 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaBase">
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+
+  <!-- Cabecera -->
+  <Grid>
+    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel>
+      <TextBlock Style="{StaticResource TituloPagina}" Text="Crear base"/>
+      <TextBlock Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,0" Text="Instala un sistema desde su ISO, de forma desatendida. Las máquinas se crean luego a partir de ella."/>
+    </StackPanel>
+    <Button x:Name="BtnCrearBase" Grid.Column="1" Style="{StaticResource BotonPrimario}" Tag="&#xEDA2;" Content="Crear base" VerticalAlignment="Center"/>
+  </Grid>
+
+  <Grid Grid.Row="1" Margin="0,18,-10,0">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition x:Name="ColResGap" Width="18"/>
+      <ColumnDefinition x:Name="ColRes" Width="300"/>
+    </Grid.ColumnDefinitions>
+
+    <ScrollViewer Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+      <StackPanel x:Name="PasosPila" Margin="0,2,0,28">
+      <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+        <StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+            <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+              <TextBlock Text="1" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Sistema" Margin="0" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StackPanel x:Name="BaseBusqueda" Margin="0,0,0,12" Visibility="Collapsed">
+            <TextBox x:Name="BaseBuscar" Style="{StaticResource Campo}" ToolTip="Busca por nombre, versión o edición (por ejemplo: debian, 13, escritorio)"/>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,4,0,0" Text="Escribe para buscar un sistema (nombre, versión o edición) o filtra por tipo."/>
+            <WrapPanel x:Name="BaseFiltros" Margin="0,8,0,0"/>
+          </StackPanel>
+          <StackPanel x:Name="BaseSelector"/>
+          <TextBlock x:Name="BaseSinCoincidencias" Style="{StaticResource Nota}" Margin="0,4,0,0" Visibility="Collapsed" Text="Ningún sistema encaja con esa búsqueda."/>
+          <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="BtnBaseVerTodos" Style="{StaticResource BotonSecundario}" Height="30" Visibility="Collapsed" Margin="0,0,8,0"/>
+            <Button x:Name="BtnBaseActualizar" Style="{StaticResource BotonSecundario}" Tag="&#xE72C;" Content="Buscar ISOs de nuevo" Height="30" ToolTip="Vuelve a mirar la carpeta de ISOs (por si acabas de descargar una)"/>
+          </StackPanel>
+          <StackPanel x:Name="BaseVariantes" Margin="0,14,0,0" Visibility="Collapsed">
+            <StackPanel x:Name="BaseFilaVersion" Orientation="Horizontal" Margin="0,0,0,8">
+              <TextBlock Text="Versión" Width="70" FontSize="12.5" VerticalAlignment="Center" Foreground="{DynamicResource T_textoSuave}"/>
+              <WrapPanel x:Name="BaseVersiones" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel x:Name="BaseFilaEdicion" Orientation="Horizontal" Margin="0,0,0,8">
+              <TextBlock Text="Edición" Width="70" FontSize="12.5" VerticalAlignment="Center" Foreground="{DynamicResource T_textoSuave}"/>
+              <WrapPanel x:Name="BaseEdiciones" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel x:Name="BaseFilaDonde" Orientation="Horizontal">
+              <TextBlock x:Name="BaseDondeTexto" Text="No hay ISO de este sistema en tu carpeta." FontSize="12.5" VerticalAlignment="Center" Foreground="{DynamicResource T_aviso}" Margin="0,0,12,0"/>
+              <Button x:Name="BtnBaseDonde" Style="{StaticResource BotonSecundario}" Content="Dónde la consigo" Height="30"/>
+            </StackPanel>
+          </StackPanel>
+            <Border x:Name="BaseExisteChip" HorizontalAlignment="Left" CornerRadius="11" Padding="10,4" Margin="0,6,0,0" Background="{DynamicResource T_neutro}">
+              <StackPanel Orientation="Horizontal">
+                <ContentControl x:Name="BaseExisteGlifo" Style="{StaticResource Icono}" Content="{StaticResource Ico_Info}" Width="14" Height="14" Foreground="{DynamicResource T_textoSuave}"/>
+                <TextBlock x:Name="BaseExiste" FontSize="12" FontWeight="Medium" Foreground="{DynamicResource T_textoSuave}" Margin="7,0,0,0"/>
+              </StackPanel>
+            </Border>
+
+        </StackPanel>
+      </ContentControl>
+
+
+        <!-- 2. ISO -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+            <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+              <TextBlock Text="2" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="ISO" Margin="0" VerticalAlignment="Center"/>
+          </StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="ISO" Margin="0,2,0,5"/>
+            <Grid>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <TextBox x:Name="BaseIso" Style="{StaticResource Campo}"/>
+              <Button x:Name="BtnBaseExaminar" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+            </Grid>
+            <TextBlock x:Name="BaseIsoNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+          </StackPanel>
+        </ContentControl>
+
+        <!-- 3. Recursos -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+            <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+              <TextBlock Text="3" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Recursos de la instalación" Margin="0" VerticalAlignment="Center"/>
+          </StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Style="{StaticResource Rotulo}" Text="RAM (GB)"/>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <Button x:Name="BtnBaseRamMenos" Style="{StaticResource BotonSecundario}" Content="−" Width="30" Height="34" Padding="0"/>
+                  <TextBox x:Name="BaseRam" Grid.Column="1" Style="{StaticResource Campo}" TextAlignment="Center" Margin="4,0"/>
+                  <Button x:Name="BtnBaseRamMas" Grid.Column="2" Style="{StaticResource BotonSecundario}" Content="+" Width="30" Height="34" Padding="0"/>
+                </Grid>
+              </StackPanel>
+              <StackPanel Grid.Column="2">
+                <TextBlock Style="{StaticResource Rotulo}" Text="Procesadores"/>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <Button x:Name="BtnBaseCpuMenos" Style="{StaticResource BotonSecundario}" Content="−" Width="30" Height="34" Padding="0"/>
+                  <TextBox x:Name="BaseCpu" Grid.Column="1" Style="{StaticResource Campo}" TextAlignment="Center" Margin="4,0"/>
+                  <Button x:Name="BtnBaseCpuMas" Grid.Column="2" Style="{StaticResource BotonSecundario}" Content="+" Width="30" Height="34" Padding="0"/>
+                </Grid>
+              </StackPanel>
+              <StackPanel Grid.Column="4">
+                <TextBlock Style="{StaticResource Rotulo}" Text="Disco (GB)"/>
+                <Grid>
+                  <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                  <Button x:Name="BtnBaseDiscoMenos" Style="{StaticResource BotonSecundario}" Content="−" Width="30" Height="34" Padding="0"/>
+                  <TextBox x:Name="BaseDisco" Grid.Column="1" Style="{StaticResource Campo}" TextAlignment="Center" Margin="4,0"/>
+                  <Button x:Name="BtnBaseDiscoMas" Grid.Column="2" Style="{StaticResource BotonSecundario}" Content="+" Width="30" Height="34" Padding="0"/>
+                </Grid>
+              </StackPanel>
+            </Grid>
+            <!-- Ficha 36: idioma, teclado y zona horaria (se ocultan en los sistemas de instalación manual) -->
+            <Grid x:Name="BaseIdiomaFila" Margin="0,14,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="1.4*"/>
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Style="{StaticResource Rotulo}" Text="Idioma del sistema"/>
+                <ComboBox x:Name="BaseIdioma" Style="{StaticResource Combo}" ToolTip="Se instala así: todas las máquinas hechas con esta base salen en este idioma"/>
+              </StackPanel>
+              <StackPanel Grid.Column="2">
+                <TextBlock Style="{StaticResource Rotulo}" Text="Teclado"/>
+                <ComboBox x:Name="BaseTeclado" Style="{StaticResource Combo}" ToolTip="Distribución del teclado dentro de la máquina"/>
+              </StackPanel>
+              <StackPanel Grid.Column="4">
+                <TextBlock Style="{StaticResource Rotulo}" Text="Zona horaria"/>
+                <ComboBox x:Name="BaseZona" Style="{StaticResource Combo}" ToolTip="Se puede cambiar después en cada máquina (Nueva máquina, opciones avanzadas)"/>
+              </StackPanel>
+            </Grid>
+            <TextBlock x:Name="BaseIdiomaNota" Style="{StaticResource Nota}" Margin="0,8,0,0" TextWrapping="Wrap" Visibility="Collapsed"/>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <TextBlock x:Name="BaseRecoNota" Style="{StaticResource Nota}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+              <Button x:Name="BtnBaseReco" Style="{StaticResource BotonSecundario}" Height="28" Content="Usar lo recomendado" ToolTip="Pone la RAM, los procesadores y el disco que conviene para este sistema"/>
+            </StackPanel>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,8,0,0" Text="La RAM y los procesadores solo se usan durante la instalación (cada máquina luego lleva los suyos). El disco sí lo heredan todas las máquinas creadas a partir de esta base."/>
+          </StackPanel>
+        </ContentControl>
+
+        <!-- 4. Qué va a pasar -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+            <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+              <TextBlock Text="4" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Antes de empezar" Margin="0" VerticalAlignment="Center"/>
+          </StackPanel>
+            <ItemsControl x:Name="BaseNotas"/>
+            <CheckBox x:Name="BaseSinYes" Style="{StaticResource Casilla}" Content="Empezar sin escribir «yes» (recomendado)" IsChecked="True" Margin="0,10,0,0" Visibility="Collapsed"
+                      ToolTip="La máquina arranca con un CD pequeño de Full Cowl que pone en marcha el instalador sin preguntar. Desmárcala solo si así no arranca."/>
+          </StackPanel>
+        </ContentControl>
+
+        <!-- Progreso -->
+      <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,18,0,0">
+        <StackPanel>
+          <Grid>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Progreso"/>
+            <TextBlock x:Name="BaseTiempo" Style="{StaticResource Nota}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,0,0"/>
+          </Grid>
+          <TextBlock x:Name="BaseProgTexto" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Text="Sin creaciones de bases recientes."/>
+          <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <ProgressBar x:Name="BaseBarra" Style="{StaticResource Progreso}" Height="10" Maximum="100" VerticalAlignment="Center"/>
+            <!-- Capa de los rayos pequeños que salen de la barra al terminar (más grande que la barra; no se puede pulsar) -->
+            <Border x:Name="BaseBarraRayos" Margin="-30,-26,-30,-26" IsHitTestVisible="False" Panel.ZIndex="5"/>
+            <TextBlock x:Name="BasePct" Grid.Column="1" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="14,0,0,0" MinWidth="52" TextAlignment="Right"/>
+          </Grid>
+          <Grid Margin="0,10,0,0" MinHeight="36">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock x:Name="BaseProgDet" Style="{StaticResource Nota}" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+            <Button x:Name="BtnBaseListo" Style="{StaticResource BotonPrimario}" Tag="&#xE73E;" VerticalAlignment="Center" Content="Ya he terminado" Height="34" Margin="12,0,0,2" Visibility="Collapsed" ToolTip="Pulsa cuando el sistema ya esté instalado: se apaga la máquina y se guarda como base"/>
+            <Button x:Name="BtnBaseCancelar" Style="{StaticResource BotonPeligro}" Tag="&#xE711;" Content="Cancelar" Height="34" Margin="12,0,0,2" VerticalAlignment="Center" Visibility="Collapsed"/>
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </ContentControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Resumen fijo -->
+    <ScrollViewer x:Name="ResHost" Grid.Column="2" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+      <ContentControl x:Name="ResTarjeta" Style="{StaticResource Tarjeta}" Padding="20,18" VerticalAlignment="Top" Margin="0,2,0,28">
+        <StackPanel>
+          <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <ContentControl x:Name="ResPastilla" VerticalAlignment="Center" Focusable="False" IsTabStop="False"/>
+            <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+              <TextBlock x:Name="ResNombre" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+              <TextBlock x:Name="ResSub" Style="{StaticResource Nota}" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+          </Grid>
+          <StackPanel x:Name="ResLineas" Margin="0,16,0,0"/>
+          <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,12,0,12"/>
+          <TextBlock x:Name="ResEstimacion" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}" FontSize="13"/>
+          <TextBlock x:Name="ResAviso" TextWrapping="Wrap" Foreground="{DynamicResource T_aviso}" FontSize="13" FontWeight="Medium" Margin="0,8,0,0" Visibility="Collapsed"/>
+          <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,12,0,12"/>
+          <TextBlock Style="{StaticResource Rotulo}" Text="Comprobaciones" Margin="0,0,0,6"/>
+          <StackPanel x:Name="ResChecks"/>
+          <Button x:Name="BtnCrearBase2" Style="{StaticResource BotonPrimario}" Tag="&#xEDA2;" Content="Crear base" Margin="0,16,0,0" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+      </ContentControl>
+    </ScrollViewer>
+  </Grid>
+</Grid>

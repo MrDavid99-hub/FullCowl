@@ -1,0 +1,21 @@
+# Finales de línea correctos al descargar en Windows:
+# los scripts de Linux (se copian a las VMs) siempre con LF,
+# los de Windows con CRLF.
+*.sh         text eol=lf
+*.hcl        text eol=lf
+*.plantilla  text eol=lf
+*.ps1        text eol=crlf
+# instalar.ps1 de la raiz se ejecuta con «irm | iex»: LF, sin BOM y solo ASCII (ficha 33)
+/instalar.ps1 text eol=lf
+*.bat        text eol=crlf
+*.xml        text eol=crlf
+*.txt        text eol=crlf
+*.py         text eol=lf
+*.fclab      text eol=lf
+*.md         text eol=lf
+*.cfg        text eol=lf
+*.iso        binary
+*.docx       binary
+*.ico        binary
+*.png        binary
+*.ttf        binary

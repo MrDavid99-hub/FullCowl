@@ -1,0 +1,373 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaMaq">
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="*"/>
+    <ColumnDefinition Width="20"/>
+    <ColumnDefinition Width="320"/>
+  </Grid.ColumnDefinitions>
+
+  <Grid Grid.Column="0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <!-- Columnas: el título nunca baja de 200 px; el buscador ocupa el resto (de 120 a 290 px) y los botones no se encogen -->
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" MinWidth="200"/>
+        <ColumnDefinition Width="*" MinWidth="120" MaxWidth="302"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <StackPanel>
+        <TextBlock Text="Mis máquinas" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextWrapping="NoWrap"/>
+        <TextBlock x:Name="TxtResumen" Text="Leyendo tus máquinas…" Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="TxtCarpetaVms" Foreground="{DynamicResource T_placeholder}" FontSize="12" Margin="0,1,0,0" TextTrimming="CharacterEllipsis"/>
+      </StackPanel>
+      <TextBox x:Name="Buscar" Grid.Column="1" Style="{StaticResource Busqueda}" VerticalAlignment="Center" Margin="12,0,0,0"/>
+      <Button x:Name="BtnRefrescar" Grid.Column="2" Style="{StaticResource BotonSecundario}" Width="38" Padding="0" Margin="8,0,0,0" VerticalAlignment="Center" ToolTip="Actualizar (F5)">
+        <ContentControl x:Name="RefrescarGlifo" Style="{StaticResource Icono}" Content="{StaticResource Ico_Actualizar}" Width="18" Height="18" Foreground="{DynamicResource T_acento}"/>
+      </Button>
+      <Button x:Name="BtnNueva" Grid.Column="3" Style="{StaticResource BotonPrimario}" Tag="{StaticResource Ico_Nueva}" Content="Nueva máquina" Margin="8,0,0,0" VerticalAlignment="Center"/>
+    </Grid>
+
+    <Border x:Name="AvisoDemo" Grid.Row="1" Visibility="Collapsed" Margin="0,14,0,0" CornerRadius="10" Padding="12,9" Background="{DynamicResource T_avisoFondo}" BorderBrush="{DynamicResource T_avisoBorde}" BorderThickness="1">
+      <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+        <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Aviso}" Width="18" Height="18" Foreground="{DynamicResource T_aviso}" VerticalAlignment="Top" Margin="0,-1,0,0"/>
+        <TextBlock x:Name="AvisoDemoTexto" Grid.Column="1" Foreground="{DynamicResource T_avisoTexto}" Margin="10,0,0,0" TextWrapping="Wrap"/>
+      </Grid>
+    </Border>
+
+    <UniformGrid Grid.Row="2" Columns="4" Margin="0,18,-12,0">
+      <ContentControl Style="{StaticResource Tarjeta}" Margin="0,0,12,0" Padding="16,14">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <Border Width="40" Height="40" CornerRadius="11" Background="{DynamicResource T_pista}">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Maquinas}" Width="20" Height="20" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+            <TextBlock x:Name="StatMaq" Text="–" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="StatMaqEtq" Text="Máquinas" FontSize="12" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+        </Grid>
+      </ContentControl>
+      <ContentControl Style="{StaticResource Tarjeta}" Margin="0,0,12,0" Padding="16,14">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <Border Width="40" Height="40" CornerRadius="11" Background="{DynamicResource T_encendidaFondo}">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Encender}" Width="20" Height="20" Foreground="{DynamicResource T_encendida}" HorizontalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+            <TextBlock x:Name="StatEnc" Text="–" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="StatEncEtq" Text="Encendidas" FontSize="12" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+        </Grid>
+      </ContentControl>
+      <ContentControl Style="{StaticResource Tarjeta}" Margin="0,0,12,0" Padding="16,14">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <Border Width="40" Height="40" CornerRadius="11" Background="{DynamicResource T_olivaFondo}">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Base}" Width="20" Height="20" Foreground="{DynamicResource T_oliva}" HorizontalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+            <TextBlock x:Name="StatBases" Text="–" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="StatBasesEtq" Text="Bases" FontSize="12" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+        </Grid>
+      </ContentControl>
+      <ContentControl Style="{StaticResource Tarjeta}" Margin="0,0,12,0" Padding="16,14">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <Border Width="40" Height="40" CornerRadius="11" Background="{DynamicResource T_linea}">
+            <TextBlock Text="&#xEDA2;" FontFamily="Segoe MDL2 Assets" FontSize="17" Foreground="{DynamicResource T_texto}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+            <TextBlock x:Name="StatLibre" Text="–" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+            <TextBlock Text="GB libres" FontSize="12" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+        </Grid>
+      </ContentControl>
+    </UniformGrid>
+
+    <WrapPanel Grid.Row="3" Orientation="Horizontal" Margin="0,20,0,12">
+      <RadioButton x:Name="FiltroTodas" Style="{StaticResource Chip}" Content="Todas" IsChecked="True"/>
+      <RadioButton x:Name="FiltroEnc" Style="{StaticResource Chip}" Content="Encendidas"/>
+      <RadioButton x:Name="FiltroBases" Style="{StaticResource Chip}" Content="Bases"/>
+      <RadioButton x:Name="FiltroDesech" Style="{StaticResource Chip}" Content="Desechables"/>
+      <RadioButton x:Name="FiltroFc" Style="{StaticResource Chip}" Content="FC" ToolTip="Solo las máquinas hechas con Full Cowl"/>
+      <Button x:Name="BtnFiltroEtq" Style="{StaticResource BotonSecundario}" Height="30" Padding="12,0" Margin="6,0,0,0" FontSize="12.5" Content="Etiquetas ▾" ToolTip="Ver solo las máquinas con ciertas etiquetas"/>
+      <Button x:Name="BtnQuitarFiltroEtq" Style="{StaticResource BotonSecundario}" Height="30" Padding="10,0" Margin="6,0,0,0" FontSize="12.5" Content="Quitar filtro" Visibility="Collapsed"/>
+      <Popup x:Name="PopFiltroEtq" PlacementTarget="{Binding ElementName=BtnFiltroEtq}" Placement="Bottom" StaysOpen="True" AllowsTransparency="True" PopupAnimation="None">
+        <Border Margin="10,4,10,12" CornerRadius="10" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="12" MinWidth="240" MaxWidth="340">
+          <Border.Effect>
+            <DropShadowEffect BlurRadius="14" ShadowDepth="2" Color="#000000" Opacity="0.22"/>
+          </Border.Effect>
+          <StackPanel>
+            <TextBox x:Name="BuscarEtq" Style="{StaticResource Campo}" Height="30" FontSize="12.5" Margin="0,0,0,8" Visibility="Collapsed" ToolTip="Buscar una etiqueta"/>
+            <ScrollViewer MaxHeight="260" VerticalScrollBarVisibility="Auto">
+              <StackPanel x:Name="ListaEtq"/>
+            </ScrollViewer>
+            <TextBlock x:Name="SinEtqFiltro" Style="{StaticResource Nota}" Text="Todavía no hay etiquetas. Ponlas en el panel de una máquina (apartado «Notas y etiquetas»)." Visibility="Collapsed"/>
+            <Button x:Name="BtnLimpiarFiltroEtq" Style="{StaticResource BotonSecundario}" Height="28" FontSize="12" Margin="0,8,0,0" Content="Quitar filtro" Visibility="Collapsed"/>
+          </StackPanel>
+        </Border>
+      </Popup>
+    </WrapPanel>
+
+    <Grid Grid.Row="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <!-- Cabecera de la vista de lista (solo se ve en esa vista; las columnas son las de PlantillaMaqFila) -->
+      <Grid x:Name="CabeceraLista" Grid.Row="0" Margin="19,6,20,0" Visibility="Collapsed">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" MinWidth="200"/>
+          <ColumnDefinition Width="140"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="130"/>
+          <ColumnDefinition Width="80"/>
+          <ColumnDefinition Width="44"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="NOMBRE" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/>
+        <TextBlock Grid.Column="1" Text="SISTEMA" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/>
+        <Border Grid.Column="2" Width="{DynamicResource Mq_AnchoRed}" ClipToBounds="True"><TextBlock Text="RED" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/></Border>
+        <TextBlock Grid.Column="3" Text="ESTADO" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/>
+        <TextBlock Grid.Column="4" Text="RAM" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/>
+      </Grid>
+      <ListBox x:Name="Lista" Grid.Row="1" Style="{StaticResource ListaMaq}" ItemContainerStyle="{StaticResource ItemMaq}" ItemTemplate="{StaticResource PlantillaMaqTarjeta}" ItemsPanel="{StaticResource PanelTarjetas}" KeyboardNavigation.TabNavigation="Continue" Visibility="Collapsed"/>
+      <StackPanel x:Name="Esqueleto" Grid.Row="1" Margin="0,4,0,0">
+        <StackPanel.Triggers>
+          <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard>
+              <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.45" Duration="0:0:0.75"/>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger>
+        </StackPanel.Triggers>
+                <Border Height="66" Margin="2,0,2,8" CornerRadius="12" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,0">
+          <Grid>
+            <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+            <StackPanel Margin="54,0,0,0" VerticalAlignment="Center">
+              <Border Height="12" Width="170" CornerRadius="6" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+              <Border Height="10" Width="250" CornerRadius="5" Background="{DynamicResource T_neutro}" HorizontalAlignment="Left" Margin="0,9,0,0"/>
+            </StackPanel>
+            <Border Width="86" Height="22" CornerRadius="11" Background="{DynamicResource T_neutro}" HorizontalAlignment="Right"/>
+          </Grid>
+        </Border>
+        <Border Height="66" Margin="2,0,2,8" CornerRadius="12" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,0">
+          <Grid>
+            <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+            <StackPanel Margin="54,0,0,0" VerticalAlignment="Center">
+              <Border Height="12" Width="170" CornerRadius="6" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+              <Border Height="10" Width="250" CornerRadius="5" Background="{DynamicResource T_neutro}" HorizontalAlignment="Left" Margin="0,9,0,0"/>
+            </StackPanel>
+            <Border Width="86" Height="22" CornerRadius="11" Background="{DynamicResource T_neutro}" HorizontalAlignment="Right"/>
+          </Grid>
+        </Border>
+        <Border Height="66" Margin="2,0,2,8" CornerRadius="12" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,0">
+          <Grid>
+            <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+            <StackPanel Margin="54,0,0,0" VerticalAlignment="Center">
+              <Border Height="12" Width="170" CornerRadius="6" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+              <Border Height="10" Width="250" CornerRadius="5" Background="{DynamicResource T_neutro}" HorizontalAlignment="Left" Margin="0,9,0,0"/>
+            </StackPanel>
+            <Border Width="86" Height="22" CornerRadius="11" Background="{DynamicResource T_neutro}" HorizontalAlignment="Right"/>
+          </Grid>
+        </Border>
+        <Border Height="66" Margin="2,0,2,8" CornerRadius="12" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,0">
+          <Grid>
+            <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+            <StackPanel Margin="54,0,0,0" VerticalAlignment="Center">
+              <Border Height="12" Width="170" CornerRadius="6" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+              <Border Height="10" Width="250" CornerRadius="5" Background="{DynamicResource T_neutro}" HorizontalAlignment="Left" Margin="0,9,0,0"/>
+            </StackPanel>
+            <Border Width="86" Height="22" CornerRadius="11" Background="{DynamicResource T_neutro}" HorizontalAlignment="Right"/>
+          </Grid>
+        </Border>
+        <Border Height="66" Margin="2,0,2,8" CornerRadius="12" Background="{DynamicResource T_superficie}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,0">
+          <Grid>
+            <Border Width="40" Height="40" CornerRadius="10" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+            <StackPanel Margin="54,0,0,0" VerticalAlignment="Center">
+              <Border Height="12" Width="170" CornerRadius="6" Background="{DynamicResource T_linea}" HorizontalAlignment="Left"/>
+              <Border Height="10" Width="250" CornerRadius="5" Background="{DynamicResource T_neutro}" HorizontalAlignment="Left" Margin="0,9,0,0"/>
+            </StackPanel>
+            <Border Width="86" Height="22" CornerRadius="11" Background="{DynamicResource T_neutro}" HorizontalAlignment="Right"/>
+          </Grid>
+        </Border>
+
+      </StackPanel>
+      <StackPanel x:Name="Vacio" Grid.Row="1" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0"/>
+    </Grid>
+  </Grid>
+
+  <!-- Panel derecho: detalle de la máquina elegida y espacio en disco -->
+  <Grid Grid.Column="2">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="14"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <ContentControl Grid.Row="0" Style="{StaticResource Tarjeta}">
+      <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20,20,14,20">
+        <Grid>
+          <StackPanel x:Name="DetalleVacio" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,70">
+            <Border Width="72" Height="72" CornerRadius="36" Background="{DynamicResource T_infoFondo}" HorizontalAlignment="Center">
+              <TextBlock Text="&#xE7F4;" FontFamily="Segoe MDL2 Assets" FontSize="28" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Text="Elige una máquina" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,16,0,0" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Aquí verás sus datos y todo lo que puedes hacer con ella." Foreground="{DynamicResource T_textoSuave}" TextWrapping="Wrap" TextAlignment="Center" Width="220" Margin="0,6,0,0"/>
+          </StackPanel>
+
+          <StackPanel x:Name="DetalleDatos" Visibility="Collapsed">
+            <Grid>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <Border x:Name="DetIcono" Width="52" Height="52" CornerRadius="14" Background="{DynamicResource T_acento}">
+                <Grid>
+                          <TextBlock x:Name="DetGlifo" FontFamily="Segoe MDL2 Assets" FontSize="22" Foreground="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                          <Path x:Name="DetLogo" Fill="#FFFFFF" Stretch="Uniform" Width="24" Height="24"/>
+                          <Viewbox Stretch="Uniform" Width="28" Height="28"><Path x:Name="DetSimbolo" Stroke="#FFFFFF" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Width="24" Height="24"/></Viewbox>
+                        </Grid>
+              </Border>
+              <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="DetNombre" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="DetSistema" Foreground="{DynamicResource T_textoSuave}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+              </StackPanel>
+            </Grid>
+            <WrapPanel x:Name="DetChips" Margin="0,14,0,0">
+              <Border x:Name="DetFcChip" CornerRadius="11" Padding="9,4" Background="{DynamicResource T_pista}" Margin="0,0,8,0" Visibility="Collapsed" ToolTip="Máquina creada con Full Cowl">
+                <TextBlock Text="FC" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource T_acentoClaro}"/>
+              </Border>
+              <Border x:Name="DetTipoChip" CornerRadius="11" Padding="10,4" Background="{DynamicResource T_pista}" Margin="0,0,8,0">
+                <TextBlock x:Name="DetTipo" FontSize="12" FontWeight="Medium" Foreground="{DynamicResource T_acentoClaro}"/>
+              </Border>
+              <Border x:Name="DetEstadoChip" CornerRadius="11" Padding="10,4">
+                <StackPanel Orientation="Horizontal">
+                  <Ellipse x:Name="DetEstadoPunto" Width="8" Height="8" VerticalAlignment="Center"/>
+                  <TextBlock x:Name="DetEstado" FontSize="12" FontWeight="Medium" Margin="7,0,0,0"/>
+                </StackPanel>
+              </Border>
+            </WrapPanel>
+            <Border x:Name="DetProgresoCaja" Visibility="Collapsed" Margin="0,14,0,0" CornerRadius="10" Padding="12,10" Background="{DynamicResource T_infoFondo}">
+            <StackPanel>
+              <TextBlock x:Name="DetProgreso" Foreground="{DynamicResource T_acentoClaro}" FontSize="12.5" FontWeight="Medium" TextWrapping="Wrap"/>
+              <ProgressBar x:Name="DetProgresoBarra" Style="{StaticResource Progreso}" Margin="0,8,0,0" Maximum="100"/>
+            </StackPanel>
+          </Border>
+          <TextBlock x:Name="DetExtras" Visibility="Collapsed" Margin="2,12,0,0" FontSize="12.5" LineHeight="19" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          <Border x:Name="DetAvisoBase" Visibility="Collapsed" Margin="0,14,0,0" CornerRadius="10" Padding="12,10" Background="{DynamicResource T_avisoFondo}" BorderBrush="{DynamicResource T_avisoBorde}" BorderThickness="1">
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <TextBlock Text="&#xE72E;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource T_aviso}" Margin="0,2,10,0"/>
+                <TextBlock x:Name="DetAvisoBaseTexto" Grid.Column="1" Foreground="{DynamicResource T_avisoTexto}" FontSize="12.5" TextWrapping="Wrap" Text="Base protegida: no se arranca ni se toca, porque sus clones dependen de ella. Para rehacerla, usa «Crear base»."/>
+              </Grid>
+            </Border>
+            <Grid x:Name="DetInfo" Margin="0,14,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="86"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <TextBlock Grid.Row="0" Style="{StaticResource Etiqueta}" Text="Base"/>
+              <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetBase"/>
+              <TextBlock Grid.Row="1" Style="{StaticResource Etiqueta}" Text="Red"/>
+              <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetRed"/>
+              <TextBlock Grid.Row="2" Style="{StaticResource Etiqueta}" Text="IP fija"/>
+              <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetIP"/>
+              <TextBlock Grid.Row="3" Style="{StaticResource Etiqueta}" Text="Dominio"/>
+              <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetDominio"/>
+              <TextBlock Grid.Row="4" Style="{StaticResource Etiqueta}" Text="Tamaño"/>
+              <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetTamano"/>
+              <TextBlock Grid.Row="5" Style="{StaticResource Etiqueta}" Text="Carpeta"/>
+              <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource Valor}" x:Name="DetCarpeta" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Grid.Row="6" Style="{StaticResource Etiqueta}" Text="Símbolo" VerticalAlignment="Center"/>
+              <ComboBox x:Name="CmbSimbolo" Grid.Row="6" Grid.Column="1" Style="{StaticResource Combo}" Height="28" Margin="0,4,0,0" HorizontalAlignment="Left" MinWidth="170" ToolTip="Si el símbolo no es el del sistema, elige el correcto. Solo se puede cambiar con la máquina apagada."/>
+            </Grid>
+            <StackPanel x:Name="DetNotas" Margin="0,4,0,4">
+              <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,0,0,12"/>
+              <TextBlock Text="Notas y etiquetas" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource T_texto}" Margin="0,0,0,10"/>
+              <TextBlock Style="{StaticResource Etiqueta}" Text="Etiquetas" Margin="0,0,0,5"/>
+              <ContentControl x:Name="HuecoEtq" Focusable="False" IsTabStop="False"/>
+              <Grid Margin="0,14,0,5">
+                <TextBlock Style="{StaticResource Etiqueta}" Text="Nota" Margin="0"/>
+                <TextBlock x:Name="ContadorNota" Text="0/500" HorizontalAlignment="Right" FontSize="11.5" Foreground="{DynamicResource T_textoSuave}"/>
+              </Grid>
+              <TextBox x:Name="CajaNota" Style="{StaticResource CampoNota}" MaxLength="500" ToolTip="Un apunte libre sobre esta máquina. Se guarda al salir de la caja."/>
+              <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource Nota}" FontSize="11.5" Text="Se guarda en el archivo de la máquina y la máquina puede leerlo. No escribas contraseñas."/>
+                <TextBlock x:Name="NotaGuardada" Grid.Column="1" Text="Guardado" Opacity="0" FontSize="11.5" FontWeight="Medium" Margin="10,0,0,0" VerticalAlignment="Top" Foreground="{DynamicResource T_acentoClaro}"/>
+              </Grid>
+            </StackPanel>
+            <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,4,0,10"/>
+            <UniformGrid Columns="2" Margin="-2,0,2,0">
+              <Button x:Name="AccEncender" Style="{StaticResource BotonPrimario}" Tag="{StaticResource Ico_Encender}" Content="Encender" Height="32" Margin="2"/>
+              <Button x:Name="AccApagar" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Apagar}" Content="Apagar" Height="32" Margin="2"/>
+              <Button x:Name="AccAbrir" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Abrir}" Content="Abrir" ToolTip="Abrir en VMware" Height="32" Margin="2"/>
+              <Button x:Name="AccCarpeta" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Carpeta}" Content="Carpeta" Height="32" Margin="2"/>
+              <Button x:Name="AccSnap" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Instantaneas}" Content="Instantáneas" Height="32" Margin="2"/>
+              <Button x:Name="AccRed" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Red}" Content="Red" Height="32" Margin="2"/>
+              <Button x:Name="AccConectar" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Conectar}" Content="Conectar" Height="32" Margin="2"/>
+              <Button x:Name="AccArchivos" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Archivos}" Content="Archivos" Height="32" Margin="2"/>
+              <Button x:Name="AccUsuarios" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Usuarios}" Content="Usuarios" Height="32" Margin="2"/>
+              <Button x:Name="AccExportar" Style="{StaticResource BotonSecundario}" Tag="&#xE898;" Content="Exportar" Height="32" Margin="2"/>
+              <Button x:Name="AccConservar" Style="{StaticResource BotonSecundario}" Tag="&#xE72E;" Content="Conservar" Height="32" Margin="2"/>
+              <Button x:Name="AccBorrar" Style="{StaticResource BotonPeligro}" Tag="{StaticResource Ico_Limpiar}" Content="Borrar" Height="32" Margin="2"/>
+            </UniformGrid>
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+    </ContentControl>
+
+    <ContentControl Grid.Row="2" Style="{StaticResource Tarjeta}" Padding="18,12">
+      <StackPanel>
+        <Grid>
+          <TextBlock Text="Espacio en disco" FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock x:Name="DiscoUnidad" HorizontalAlignment="Right" Foreground="{DynamicResource T_textoSuave}" FontSize="12" VerticalAlignment="Center"/>
+        </Grid>
+        <TextBlock x:Name="DiscoTexto" Foreground="{DynamicResource T_textoSuave}" FontSize="12" Margin="0,2,0,8" Text="Calculando…"/>
+        <Border x:Name="DiscoMarco" Height="10" Background="{DynamicResource T_linea}" CornerRadius="5">
+          <Grid x:Name="DiscoBarra">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition x:Name="DiscoColBases" Width="0*" MinWidth="0"/>
+              <ColumnDefinition x:Name="DiscoColMaq" Width="0*"/>
+              <ColumnDefinition x:Name="DiscoColOtros" Width="0*"/>
+              <ColumnDefinition x:Name="DiscoColLibre" Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Fill="{DynamicResource T_acento}"/>
+            <Rectangle Grid.Column="1" Fill="#78EBDD"/>
+            <Rectangle Grid.Column="2" Fill="#9C9C54"/>
+          </Grid>
+        </Border>
+        <WrapPanel Margin="0,8,0,0">
+          <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+            <Ellipse Width="8" Height="8" Fill="{DynamicResource T_acento}" VerticalAlignment="Center"/>
+            <TextBlock x:Name="DiscoLeyBases" Text="Bases" FontSize="12" Foreground="{DynamicResource T_textoSuave}" Margin="6,0,0,0"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,12,0" Visibility="Visible">
+            <Ellipse Width="8" Height="8" Fill="#78EBDD" VerticalAlignment="Center"/>
+            <TextBlock x:Name="DiscoLeyMaq" Text="Máquinas" FontSize="12" Foreground="{DynamicResource T_textoSuave}" Margin="6,0,0,0"/>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+            <Ellipse Width="8" Height="8" Fill="#9C9C54" VerticalAlignment="Center"/>
+            <TextBlock x:Name="DiscoLeyOtros" Text="Otros" FontSize="12" Foreground="{DynamicResource T_textoSuave}" Margin="6,0,0,0"/>
+          </StackPanel>
+        </WrapPanel>
+        <TextBlock x:Name="DiscoBasesDet" Style="{StaticResource Nota}" Margin="0,6,0,0" Visibility="Collapsed"/>
+        <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,8,0,8"/>
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <TextBlock x:Name="DiscoRestos" Style="{StaticResource Nota}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+          <Button x:Name="BtnLimpiar" Grid.Column="1" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Limpiar}" Content="Limpiar" Height="32" IsEnabled="False"
+                  ToolTip="Borra registros antiguos, cachés de VMware y temporales. No toca ninguna máquina."/>
+        </Grid>
+      </StackPanel>
+    </ContentControl>
+  </Grid>
+</Grid>

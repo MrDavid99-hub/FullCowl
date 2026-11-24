@@ -1,0 +1,44 @@
+# Instalación desatendida de Rocky Linux / AlmaLinux 9 (crear-base.ps1 la genera y Packer la sirve por HTTP)
+# Hace falta la ISO «DVD» (lleva los paquetes dentro; la «boot» necesitaría Internet y un repositorio).
+cdrom
+text
+reboot
+
+# Idioma, teclado y zona horaria
+lang {{LOCALE}}
+keyboard {{TECLADO}}
+timezone {{ZONA}} --utc
+
+# Red por DHCP (VMware) y nombre
+network --bootproto=dhcp --device=link --activate --hostname={{HOSTNAME}}
+
+# Cuentas: root bloqueado; usuario con sudo (grupo wheel)
+rootpw --lock
+user --name={{USER}} --groups=wheel --plaintext --password={{PASS}}
+
+# Disco entero, sin preguntar
+zerombr
+clearpart --all --initlabel
+autopart --type=plain --nohome
+bootloader --location=mbr
+
+firewall --enabled --service=ssh
+selinux --enforcing
+{{SKIPX}}
+firstboot --disable
+
+%packages
+{{ENTORNO}}
+open-vm-tools
+openssh-server
+NetworkManager
+sudo
+curl
+%end
+
+%post
+# SSH sin entrada de root; servicios necesarios al arrancar
+sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+systemctl enable sshd vmtoolsd NetworkManager
+{{POST_ESCRITORIO}}
+%end

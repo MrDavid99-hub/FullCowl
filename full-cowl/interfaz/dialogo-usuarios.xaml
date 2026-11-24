@@ -1,0 +1,102 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="24,14,24,20">
+    <Border CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9" Margin="0,0,0,16">
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource T_acentoClaro}" VerticalAlignment="Center"/>
+        <TextBlock x:Name="DestinoUsu" Foreground="{DynamicResource T_acentoClaro}" FontWeight="Medium" Margin="10,0,0,0" TextWrapping="Wrap"/>
+      </StackPanel>
+    </Border>
+
+    <!-- Origen: patrón o CSV -->
+    <TextBlock Style="{StaticResource Rotulo}" Text="Cómo quieres crearlos"/>
+    <UniformGrid Columns="2">
+      <RadioButton x:Name="OpUsuPatron" Style="{StaticResource TarjetaOpcion}" GroupName="OrigenUsu" IsChecked="True" Margin="0,0,5,0">
+        <StackPanel>
+          <TextBlock Text="Por patrón" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock Text="alumno01, alumno02… con un prefijo y números." FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}" Margin="0,2,0,0"/>
+        </StackPanel>
+      </RadioButton>
+      <RadioButton x:Name="OpUsuCsv" Style="{StaticResource TarjetaOpcion}" GroupName="OrigenUsu" Margin="5,0,0,0">
+        <StackPanel>
+          <TextBlock Text="Desde un CSV" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock Text="Una lista hecha en Excel, con nombres y grupos." FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}" Margin="0,2,0,0"/>
+        </StackPanel>
+      </RadioButton>
+    </UniformGrid>
+
+    <!-- Por patrón -->
+    <Grid x:Name="PanelUsuPatron" Margin="0,14,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="90"/><ColumnDefinition Width="12"/><ColumnDefinition Width="90"/>
+      </Grid.ColumnDefinitions>
+      <StackPanel>
+        <TextBlock Style="{StaticResource Rotulo}" Text="Prefijo"/>
+        <TextBox x:Name="PrefijoUsu" Style="{StaticResource Campo}" Text="alumno"/>
+      </StackPanel>
+      <StackPanel Grid.Column="2">
+        <TextBlock Style="{StaticResource Rotulo}" Text="Desde"/>
+        <TextBox x:Name="DesdeUsu" Style="{StaticResource Campo}" Text="1"/>
+      </StackPanel>
+      <StackPanel Grid.Column="4">
+        <TextBlock Style="{StaticResource Rotulo}" Text="Hasta"/>
+        <TextBox x:Name="HastaUsu" Style="{StaticResource Campo}" Text="10"/>
+      </StackPanel>
+    </Grid>
+
+    <!-- Desde CSV -->
+    <StackPanel x:Name="PanelUsuCsv" Margin="0,14,0,0" Visibility="Collapsed">
+      <Grid>
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+        <TextBox x:Name="CsvUsu" Style="{StaticResource Campo}"/>
+        <Button x:Name="BtnUsuExaminar" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+      </Grid>
+      <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+        <Button x:Name="BtnUsuEjemplo" Style="{StaticResource BotonSecundario}" Tag="&#xE8A5;" Content="Crear CSV de ejemplo" Height="30" Padding="10,0"/>
+        <TextBlock Style="{StaticResource Nota}" Text="usuario;nombre;apellidos;password;grupo" VerticalAlignment="Center" Margin="10,0,0,0"/>
+      </StackPanel>
+    </StackPanel>
+
+    <!-- Vista previa de lo que se creará -->
+    <Border CornerRadius="10" Background="{DynamicResource T_campo}" Padding="14,10" Margin="0,14,0,0">
+      <StackPanel>
+        <TextBlock x:Name="PrevUsuTitulo" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+        <TextBlock x:Name="PrevUsuLista" Style="{StaticResource Nota}" Margin="0,3,0,0" TextWrapping="Wrap"/>
+      </StackPanel>
+    </Border>
+    <TextBlock x:Name="EjemploUsu" Visibility="Collapsed"/>
+
+    <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,18,0,14"/>
+    <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <StackPanel>
+        <TextBlock Style="{StaticResource Rotulo}" Text="Contraseña de los usuarios nuevos"/>
+        <Grid>
+          <PasswordBox x:Name="PassUsu" Style="{StaticResource CampoClave}"/>
+          <TextBox x:Name="PassUsuVer" Style="{StaticResource Campo}" Visibility="Collapsed"/>
+          <ToggleButton x:Name="BtnVerPass" Style="{StaticResource BotonOjo}" HorizontalAlignment="Right" Margin="0,0,3,0" ToolTip="Mostrar u ocultar la contraseña"/>
+        </Grid>
+        <TextBlock x:Name="NotaPassUsu" Style="{StaticResource Nota}" Margin="0,4,0,0"/>
+      </StackPanel>
+      <StackPanel Grid.Column="2">
+        <TextBlock Style="{StaticResource Rotulo}" Text="Grupo (opcional)"/>
+        <TextBox x:Name="GrupoUsu" Style="{StaticResource Campo}"/>
+        <TextBlock Style="{StaticResource Nota}" Text="Se crea si no existe" Margin="0,4,0,0"/>
+      </StackPanel>
+      <StackPanel Grid.Row="1" Margin="0,12,0,0">
+        <TextBlock Style="{StaticResource Rotulo}" Text="Unidad organizativa"/>
+        <TextBox x:Name="OuUsu" Style="{StaticResource Campo}" Text="Alumnos"/>
+        <TextBlock x:Name="NotaOuUsu" Style="{StaticResource Nota}" Margin="0,4,0,0"/>
+      </StackPanel>
+    </Grid>
+    <CheckBox x:Name="CambiarUsu" Style="{StaticResource Casilla}" Content="Que cambien la contraseña al iniciar sesión por primera vez" Margin="0,16,0,0"/>
+    <TextBlock x:Name="AvisoUsu" Style="{StaticResource Nota}" Margin="0,10,0,0"/>
+  </StackPanel>
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button x:Name="BtnUsuNo" Style="{StaticResource BotonSecundario}" Content="Cancelar" MinWidth="104"/>
+      <Button x:Name="BtnUsuOk" Style="{StaticResource BotonPrimario}" Tag="&#xE8FA;" Content="Crear usuarios" Margin="8,0,0,0"/>
+    </StackPanel>
+  </Border>
+</Grid>

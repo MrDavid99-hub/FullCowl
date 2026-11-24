@@ -1,0 +1,33 @@
+# ---- Propio de cada PC: NO se sube nunca
+# Carpetas y usuario de este equipo
+full-cowl/config.local.json
+# Contraseña de las VMs (cifrada con DPAPI: solo sirve en el PC donde se creó)
+full-cowl/password.sec
+full-cowl/password.sec.antes
+# Lo último elegido en la ventana, segmentos LAN, progreso y temporales
+full-cowl/preferencias.json
+full-cowl/segmentos.json
+full-cowl/plantillas-laboratorio.json
+full-cowl/estado/
+full-cowl/build/
+full-cowl/packer_cache/
+full-cowl/*.log
+
+# Accesos directos que crean las propias herramientas
+*.lnk
+
+# Basura de Windows / editores
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Patrones de cadenas privadas de cada persona (ficha 31): no se suben nunca
+herramientas/privado.txt
+__pycache__/
+*.pyc
+
+# Packer descargado por Full Cowl (ficha 33)
+herramientas/packer/
+
+# Lo que construye herramientas/crear-release.py (ficha 33)
+dist/

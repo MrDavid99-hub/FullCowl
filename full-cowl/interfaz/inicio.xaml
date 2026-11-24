@@ -1,0 +1,124 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaInicio">
+  <ScrollViewer Margin="0,0,-10,0" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="0,2,0,28">
+
+      <!-- Tarjeta de bienvenida: saludo, estado y las cuatro acciones -->
+      <Grid>
+        <Border CornerRadius="18" Background="{DynamicResource T_bienvenida}">
+          <Border.Effect>
+            <DropShadowEffect BlurRadius="22" ShadowDepth="3" Direction="270" Opacity="0.12" Color="#12261A"/>
+          </Border.Effect>
+        </Border>
+        <!-- El logo, enorme y muy suave, de fondo -->
+        <Border CornerRadius="18" ClipToBounds="True">
+          <Image x:Name="InicioMarca" Width="330" Height="330" Opacity="0.07" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-70,-50,0" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+        </Border>
+        <!-- Rayos ocasionales (rayos.cs): encima del logo y debajo del texto, recortados a la tarjeta -->
+        <Border x:Name="InicioRayos" CornerRadius="18" ClipToBounds="True" IsHitTestVisible="False"/>
+        <StackPanel Margin="30,26,30,28">
+          <TextBlock x:Name="InicioSaludo" Foreground="#F4FBF6" FontSize="28" FontWeight="SemiBold"/>
+          <TextBlock x:Name="InicioSub" Foreground="{DynamicResource T_textoMenu}" FontSize="13.5" Margin="0,5,0,0" Text="¿Qué quieres hacer hoy?"/>
+
+          <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+            <Border CornerRadius="14" Background="#1FFFFFFF" Padding="12,5" Margin="0,0,8,0">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE7E8;" FontFamily="Segoe MDL2 Assets" Foreground="#78EBDD" FontSize="13" VerticalAlignment="Center"/>
+                <TextBlock x:Name="InicioChipEnc" Foreground="#F4FBF6" FontSize="12.5" Margin="8,0,0,0" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+            <Border x:Name="InicioChipDisco" Cursor="Hand" ToolTip="Abrir Espacio y limpieza" CornerRadius="14" Background="#1FFFFFFF" Padding="12,5" Margin="0,0,8,0">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xEDA2;" FontFamily="Segoe MDL2 Assets" Foreground="#78EBDD" FontSize="13" VerticalAlignment="Center"/>
+                <TextBlock x:Name="InicioChipLibre" Foreground="#F4FBF6" FontSize="12.5" Margin="8,0,0,0" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+            <Border CornerRadius="14" Background="#1FFFFFFF" Padding="12,5">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE916;" FontFamily="Segoe MDL2 Assets" Foreground="#78EBDD" FontSize="13" VerticalAlignment="Center"/>
+                <TextBlock x:Name="InicioChipTareas" Foreground="#F4FBF6" FontSize="12.5" Margin="8,0,0,0" VerticalAlignment="Center"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+
+          <Grid Margin="0,22,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="1.5*"/>
+              <ColumnDefinition Width="12"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="12"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="12"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BaldNueva" Grid.Column="0" Style="{StaticResource BaldosaInicio}" Background="{DynamicResource T_destacado}" Foreground="{DynamicResource T_sobreDestacado}" Height="116" Padding="18,16" HorizontalContentAlignment="Stretch">
+              <Grid>
+                <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0.65"/>
+                <StackPanel VerticalAlignment="Bottom">
+                  <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Nueva}" Width="24" Height="24" HorizontalAlignment="Left" Foreground="{DynamicResource T_sobreDestacado}"/>
+                <TextBlock Text="Nueva máquina" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                <TextBlock Text="Crea una desde una base" FontSize="12" Opacity="0.75" Margin="0,2,0,0"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+            <Button x:Name="BaldLab" Grid.Column="2" Style="{StaticResource BaldosaInicio}" Background="{DynamicResource T_mosaico}" Height="116" Padding="18,16" HorizontalContentAlignment="Stretch">
+              <Grid>
+                <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0.65"/>
+                <StackPanel VerticalAlignment="Bottom">
+                  <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Laboratorio}" Width="24" Height="24" HorizontalAlignment="Left" Foreground="#78EBDD"/>
+                <TextBlock Text="Laboratorio de dominio" FontSize="14" FontWeight="SemiBold" Margin="0,10,0,0" TextWrapping="Wrap"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+            <Button x:Name="BaldBase" Grid.Column="4" Style="{StaticResource BaldosaInicio}" Background="{DynamicResource T_mosaico}" Height="116" Padding="18,16" HorizontalContentAlignment="Stretch">
+              <Grid>
+                <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0.65"/>
+                <StackPanel VerticalAlignment="Bottom">
+                  <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Base}" Width="24" Height="24" HorizontalAlignment="Left" Foreground="#78EBDD"/>
+                <TextBlock Text="Crear base" FontSize="14" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+            <Button x:Name="BaldImp" Grid.Column="6" Style="{StaticResource BaldosaInicio}" Background="{DynamicResource T_mosaico}" Height="116" Padding="18,16" HorizontalContentAlignment="Stretch">
+              <Grid>
+                <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0.65"/>
+                <StackPanel VerticalAlignment="Bottom">
+                  <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Importar}" Width="24" Height="24" HorizontalAlignment="Left" Foreground="#78EBDD"/>
+                <TextBlock Text="Importar" FontSize="14" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                </StackPanel>
+              </Grid>
+            </Button>
+          </Grid>
+        </StackPanel>
+      </Grid>
+
+      <!-- En marcha y Avisos -->
+      <Grid Margin="0,18,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="18"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18">
+          <StackPanel>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="En marcha"/>
+            <StackPanel x:Name="InicioMarcha"/>
+          </StackPanel>
+        </ContentControl>
+        <ContentControl Grid.Column="2" Style="{StaticResource Tarjeta}" Padding="22,18">
+          <StackPanel>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Avisos"/>
+            <StackPanel x:Name="InicioAvisos"/>
+          </StackPanel>
+        </ContentControl>
+      </Grid>
+
+      <!-- Seguir con -->
+      <StackPanel x:Name="InicioSeguirCaja" Margin="0,22,0,0">
+        <TextBlock Text="Seguir con" Foreground="{DynamicResource T_textoSuave}" FontSize="12.5" FontWeight="Medium" Margin="2,0,0,8"/>
+        <UniformGrid x:Name="InicioSeguir" Rows="1" Columns="4"/>
+        <StackPanel x:Name="InicioSeguirVacio" Visibility="Collapsed" Margin="2,4,0,0"/>
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</Grid>

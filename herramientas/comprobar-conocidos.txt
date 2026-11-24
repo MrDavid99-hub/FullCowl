@@ -1,0 +1,33 @@
+# Coincidencias de comprobar.py ya revisadas y aceptadas (ficha 31).
+# Formato, una por linea:   regla | archivo | clave | motivo
+#   - «archivo» y «clave» admiten comodines (*). La clave sale con: python3 herramientas/comprobar.py --detalle
+#   - El motivo es obligatorio. Las entradas que dejen de hacer falta salen como aviso para borrarlas.
+#   - Para ver TODO sin esta lista (pasada antes de publicar):  python3 herramientas/comprobar.py --sin-conocidos
+#   - Nunca se aceptan aqui las cadenas privadas (regla «privado») ni archivos prohibidos en Git.
+#
+# ---- Rutas de unidad (letra D) de los PC de David en documentos que se publicaran (revisar en la ficha 32) ----
+privado-generico | CHANGELOG.md | ruta-d | Historial: cita las carpetas de los PC de David. Revisar en la ficha 32 (publicar).
+privado-generico | README.md | ruta-d | Ejemplo de instalacion con una ruta de este PC. Cambiar a una ruta neutra en la ficha 32 (publicar).
+privado-generico | docs/MANUAL.md | ruta-d | Ejemplos de instalacion y actualizacion con una ruta de este PC. Revisar en la ficha 32 (publicar).
+privado-generico | full-cowl/interfaz/asistente.ps1 | ruta-d | Carpetas de ISOs que el asistente propone si existen (solo las comprueba con Test-Path).
+#
+# ---- Variables locales con el nombre de un x:Name de la interfaz ----
+# Aceptadas en la primera ejecucion (11/11/2026) SIN revisar a fondo. Un «$lista» local tapa a «$Lista» (la lista de
+# Mis maquinas) en esa funcion y en las que esta llame: solo daria problemas si alguna de ellas lee «$Lista».
+# Si algun dia falla algo con listas vacias, renombrar la variable (por ejemplo $elementosLista).
+variable-pisa-xname | full-cowl/interfaz/animaciones.ps1 | Entrada-Escalonada:lista | Variable local de una funcion de animacion; no llama a codigo de Mis maquinas.
+variable-pisa-xname | full-cowl/interfaz/lab-compartir.ps1 | Leer-Fclab:lista | Variable local de una funcion que solo lee un .fclab; no llama a codigo de Mis maquinas.
+variable-pisa-xname | full-cowl/interfaz/lab-mapa.ps1 | Arrancar-AnimMapa:lista | Variable local de la animacion del mapa; sin revisar a fondo (ver nota de arriba).
+variable-pisa-xname | full-cowl/interfaz/lab-mis.ps1 | Actualizar-AnimLab:lista | Variable local de la animacion del laboratorio; sin revisar a fondo (ver nota de arriba).
+variable-pisa-xname | full-cowl/interfaz/laboratorio.ps1 | Aplicar-PlantillaLab:lista | Variable local (texto con las bases que faltan); sin revisar a fondo (ver nota de arriba).
+variable-pisa-xname | full-cowl/interfaz/selector.ps1 | Pintar-Selector:lista | Variable local del selector de sistemas; sin revisar a fondo (ver nota de arriba).
+variable-pisa-xname | full-cowl/interfaz/asistente.ps1 | Espacio-LibreGb:raiz | Variable local con la raiz de una unidad; no tiene relacion con el elemento «Raiz» de la ventana.
+#
+# ---- Variables que se vuelven a guardar a proposito ----
+variable-pisa-xname | full-cowl/ventana-nueva.ps1 | <script>:pagina* | Cada pagina se guarda otra vez con el mismo objeto que ya publico Elementos: no cambia nada.
+# OJO, caso real: ajustes-hub.ps1 guarda una tabla en «$script:hubSecciones», que es el mismo nombre que la rejilla
+# «HubSecciones» del XAML, y ventana-nueva.ps1 (linea 165) usa «$HubSecciones» como rejilla. Funciona SOLO porque esa
+# linea se ejecuta antes de cargar ajustes-hub.ps1. Conviene renombrar la tabla (por ejemplo $script:hubTabla).
+variable-pisa-xname | full-cowl/interfaz/ajustes-hub.ps1 | <script>:hubsecciones | Pendiente de renombrar: tapa la rejilla HubSecciones; hoy funciona por el orden de carga (ver nota).
+privado-generico | instalar.ps1 | clave-larga | Falso positivo: es la direccion de descarga de la Release ("releases/latest/download/SHA256SUMS.txt"), no una clave.
+privado-generico | actualizar.ps1 | clave-larga | Falso positivo: es la direccion de descarga de la Release ("releases/latest/download/SHA256SUMS.txt"), no una clave.

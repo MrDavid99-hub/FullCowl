@@ -1,0 +1,56 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="24,14,24,20">
+    <Border CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9" Margin="0,0,0,16">
+      <TextBlock Style="{StaticResource Nota}" Foreground="{DynamicResource T_acentoClaro}" Text="Dónde están las cosas en este PC. Se guarda solo aquí (config.local.json): cada equipo tiene sus carpetas y no se sube a GitHub."/>
+    </Border>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de ISOs"/>
+    <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBox x:Name="AjIsos" Style="{StaticResource Campo}"/>
+      <Button x:Name="BtnAjIsos" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+    </Grid>
+    <TextBlock x:Name="AjIsosNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de máquinas" Margin="0,16,0,5"/>
+    <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBox x:Name="AjVms" Style="{StaticResource Campo}"/>
+      <Button x:Name="BtnAjVms" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+    </Grid>
+    <TextBlock x:Name="AjVmsNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Usuario de las máquinas" Margin="0,16,0,5"/>
+    <TextBox x:Name="AjUsuario" Style="{StaticResource Campo}" Width="220" HorizontalAlignment="Left" MaxLength="20"/>
+    <TextBlock x:Name="AjUsuarioNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+    <Border x:Name="AjUsuarioAviso" Visibility="Collapsed" CornerRadius="9" Background="{DynamicResource T_avisoFondo}" BorderBrush="{DynamicResource T_avisoBorde}" BorderThickness="1" Padding="12,9" Margin="0,10,0,0">
+      <TextBlock x:Name="AjUsuarioAvisoTexto" Foreground="{DynamicResource T_avisoTexto}" FontSize="12.5" TextWrapping="Wrap"/>
+    </Border>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Tu nombre (para el saludo de Inicio)" Margin="0,18,0,5"/>
+    <TextBox x:Name="AjNombre" Style="{StaticResource Campo}" Width="220" HorizontalAlignment="Left" MaxLength="24"/>
+    <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Si lo dejas vacío, se usa el nombre de tu usuario de Windows."/>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Al abrir Full Cowl, empezar en" Margin="0,16,0,5"/>
+    <ComboBox x:Name="AjPaginaInicial" Style="{StaticResource Combo}" Width="220" HorizontalAlignment="Left"/>
+
+    <TextBlock Style="{StaticResource Nota}" Margin="0,18,0,0" Text="El tema, el color de acento, el modo sobrio, la vista de Mis máquinas, el tamaño de letra y las animaciones están en la pantalla Ajustes del menú."/>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Actualizaciones" Margin="0,20,0,5"/>
+    <TextBlock x:Name="AjActInfo" Style="{StaticResource Nota}" Margin="0,0,0,8"/>
+    <StackPanel Orientation="Horizontal">
+      <ComboBox x:Name="AjActModo" Style="{StaticResource Combo}" Width="220" HorizontalAlignment="Left"/>
+      <Button x:Name="BtnAjBuscarAct" Style="{StaticResource BotonSecundario}" Content="Buscar actualizaciones" Margin="12,0,0,0"/>
+    </StackPanel>
+    <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Al abrir Full Cowl: avisarme (lo normal), actualizar solo (si no hay tareas en marcha ni cambios hechos a mano) o no buscar."/>
+  </StackPanel>
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <Grid>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button x:Name="BtnAjNo" Style="{StaticResource BotonSecundario}" Content="Cancelar" MinWidth="104"/>
+        <Button x:Name="BtnAjOk" Style="{StaticResource BotonPrimario}" Content="Guardar" MinWidth="104" Margin="8,0,0,0" IsDefault="True"/>
+      </StackPanel>
+    </Grid>
+  </Border>
+</Grid>

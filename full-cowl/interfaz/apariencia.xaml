@@ -1,0 +1,176 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaApariencia">
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+
+  <!-- Cabecera -->
+  <Grid Grid.Row="0" Margin="0,0,0,16">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <StackPanel>
+      <TextBlock Text="AJUSTES" Foreground="{DynamicResource T_textoSuave}" FontSize="11.5" FontWeight="SemiBold"/>
+      <TextBlock Text="Apariencia" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,2,0,0"/>
+      <TextBlock Text="Los cambios se ven al momento y se recuerdan. A la derecha, una vista previa de Mis máquinas." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,0"/>
+    </StackPanel>
+  </Grid>
+
+  <Grid Grid.Row="1">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="400"/>
+      <ColumnDefinition Width="20"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- Mandos -->
+    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,-8,0" Padding="0,0,8,16">
+      <StackPanel>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16" Margin="0,0,0,12">
+          <StackPanel>
+            <TextBlock Text="Tema" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Automático sigue el tema de Windows." Foreground="{DynamicResource T_textoSuave}" FontSize="12" Margin="0,2,0,10"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApTemaClaro" GroupName="ApTema" Style="{StaticResource Segmento}" Content="Claro"/>
+                <RadioButton x:Name="ApTemaOscuro" GroupName="ApTema" Style="{StaticResource Segmento}" Content="Oscuro"/>
+                <RadioButton x:Name="ApTemaAuto" GroupName="ApTema" Style="{StaticResource Segmento}" Content="Automático"/>
+              </UniformGrid>
+            </Border>
+          </StackPanel>
+        </ContentControl>
+
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16" Margin="0,0,0,12">
+          <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+              <TextBlock Text="Modo sobrio (para clase)" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+              <TextBlock Text="Colores apagados y grises, sin rayos ni animación de inicio. Pensado para proyectar." Foreground="{DynamicResource T_textoSuave}" FontSize="12" TextWrapping="Wrap" Margin="0,2,12,0"/>
+            </StackPanel>
+            <ToggleButton x:Name="ApSobrio" Grid.Column="1" Style="{StaticResource Interruptor}" VerticalAlignment="Center"/>
+          </Grid>
+        </ContentControl>
+
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16" Margin="0,0,0,12">
+          <StackPanel>
+            <TextBlock Text="Color" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ApAcentoNota" Text="Cambia el fondo, el menú y las tarjetas según el color. Los rayos y los símbolos de los sistemas no cambian." Foreground="{DynamicResource T_textoSuave}" FontSize="12" TextWrapping="Wrap" Margin="0,2,0,12"/>
+            <WrapPanel x:Name="ApMuestras"/>
+            <TextBlock Margin="0,10,0,0" Foreground="{DynamicResource T_textoSuave}" FontSize="12">
+              <Run Text="Elegido: "/><Run x:Name="ApAcentoNombre" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </TextBlock>
+            <TextBlock Text="El color cambia" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,16,0,8"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApColorTotal" GroupName="ApColorAlcance" Style="{StaticResource Segmento}" Content="Toda la interfaz"/>
+                <RadioButton x:Name="ApColorAcento" GroupName="ApColorAlcance" Style="{StaticResource Segmento}" Content="Solo el acento"/>
+              </UniformGrid>
+            </Border>
+          </StackPanel>
+        </ContentControl>
+
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16" Margin="0,0,0,12">
+          <StackPanel>
+            <TextBlock Text="Mis máquinas" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Cómo se ven tus máquinas en la lista." Foreground="{DynamicResource T_textoSuave}" FontSize="12" Margin="0,2,0,10"/>
+            <TextBlock Text="Vista" Foreground="{DynamicResource T_textoSuave}" FontSize="12" FontWeight="Medium" Margin="0,0,0,5"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApVistaTarjetas" GroupName="ApVista" Style="{StaticResource Segmento}" Content="Tarjetas"/>
+                <RadioButton x:Name="ApVistaLista" GroupName="ApVista" Style="{StaticResource Segmento}" Content="Lista"/>
+              </UniformGrid>
+            </Border>
+            <TextBlock Text="Tamaño" Foreground="{DynamicResource T_textoSuave}" FontSize="12" FontWeight="Medium" Margin="0,14,0,5"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApTamCompacto" GroupName="ApTam" Style="{StaticResource Segmento}" Content="Compacto"/>
+                <RadioButton x:Name="ApTamNormal" GroupName="ApTam" Style="{StaticResource Segmento}" Content="Normal"/>
+                <RadioButton x:Name="ApTamGrande" GroupName="ApTam" Style="{StaticResource Segmento}" Content="Grande"/>
+              </UniformGrid>
+            </Border>
+          </StackPanel>
+        </ContentControl>
+
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16" Margin="0,0,0,12">
+          <StackPanel>
+            <TextBlock Text="Tamaño de letra" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock Text="Grande amplía el contenido de las pantallas un 15 %." Foreground="{DynamicResource T_textoSuave}" FontSize="12" Margin="0,2,0,10"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApLetraNormal" GroupName="ApLetra" Style="{StaticResource Segmento}" Content="Normal"/>
+                <RadioButton x:Name="ApLetraGrande" GroupName="ApLetra" Style="{StaticResource Segmento}" Content="Grande"/>
+              </UniformGrid>
+            </Border>
+          </StackPanel>
+        </ContentControl>
+
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="18,16">
+          <StackPanel>
+            <TextBlock Text="Animaciones" FontSize="14.5" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ApAnimNota" Text="Normales: todo. Reducidas: solo fundidos, sin movimiento, rayos ni brillos. Ninguna: nada se mueve." Foreground="{DynamicResource T_textoSuave}" FontSize="12" TextWrapping="Wrap" Margin="0,2,0,10"/>
+            <Border CornerRadius="11" Background="{DynamicResource T_campo}" Padding="2">
+              <UniformGrid Rows="1">
+                <RadioButton x:Name="ApAnimNormales" GroupName="ApAnim" Style="{StaticResource Segmento}" Content="Normales"/>
+                <RadioButton x:Name="ApAnimReducidas" GroupName="ApAnim" Style="{StaticResource Segmento}" Content="Reducidas"/>
+                <RadioButton x:Name="ApAnimNinguna" GroupName="ApAnim" Style="{StaticResource Segmento}" Content="Ninguna"/>
+              </UniformGrid>
+            </Border>
+            <Grid Margin="0,14,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Rayos ocasionales en Inicio" Foreground="{DynamicResource T_texto}" FontWeight="Medium"/>
+                <TextBlock Text="Algún rayo suave de vez en cuando." Foreground="{DynamicResource T_textoSuave}" FontSize="12"/>
+              </StackPanel>
+              <ToggleButton x:Name="ApRayos" Grid.Column="1" Style="{StaticResource Interruptor}" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Margin="0,12,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Animación al abrir" Foreground="{DynamicResource T_texto}" FontWeight="Medium"/>
+                <TextBlock Text="Unos 2 segundos con el logo; se salta con un clic." Foreground="{DynamicResource T_textoSuave}" FontSize="12"/>
+              </StackPanel>
+              <ToggleButton x:Name="ApAnimAbrir" Grid.Column="1" Style="{StaticResource Interruptor}" VerticalAlignment="Center"/>
+            </Grid>
+          </StackPanel>
+        </ContentControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Vista previa de Mis máquinas -->
+    <ContentControl Grid.Column="2" Style="{StaticResource Tarjeta}" Padding="22,20" VerticalAlignment="Top">
+      <StackPanel>
+        <Grid>
+          <TextBlock Text="Mis máquinas" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock Text="VISTA PREVIA" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource T_textoSuave}" FontSize="11" FontWeight="SemiBold"/>
+        </Grid>
+        <UniformGrid Columns="4" Margin="0,14,-8,0">
+          <Border CornerRadius="10" Background="{DynamicResource T_campo}" Padding="12,8" Margin="0,0,8,0">
+            <StackPanel><TextBlock Text="Máquinas" FontSize="11" Foreground="{DynamicResource T_textoSuave}"/><TextBlock Text="6" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/></StackPanel>
+          </Border>
+          <Border CornerRadius="10" Background="{DynamicResource T_campo}" Padding="12,8" Margin="0,0,8,0">
+            <StackPanel><TextBlock Text="Encendidas" FontSize="11" Foreground="{DynamicResource T_textoSuave}"/><TextBlock Text="3" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_acentoClaro}"/></StackPanel>
+          </Border>
+          <Border CornerRadius="10" Background="{DynamicResource T_campo}" Padding="12,8" Margin="0,0,8,0">
+            <StackPanel><TextBlock Text="Bases" FontSize="11" Foreground="{DynamicResource T_textoSuave}"/><TextBlock Text="4" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/></StackPanel>
+          </Border>
+          <Border CornerRadius="10" Background="{DynamicResource T_campo}" Padding="12,8" Margin="0,0,8,0">
+            <StackPanel><TextBlock Text="Libre" FontSize="11" Foreground="{DynamicResource T_textoSuave}"/><TextBlock Text="552 GB" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/></StackPanel>
+          </Border>
+        </UniformGrid>
+        <Grid Margin="0,12,0,0">
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border CornerRadius="10" Background="{DynamicResource T_campo}" Height="34" Padding="12,0">
+            <TextBlock Text="Buscar máquina" Foreground="{DynamicResource T_placeholder}" VerticalAlignment="Center"/>
+          </Border>
+          <Border Grid.Column="1" CornerRadius="10" Background="{DynamicResource T_acento}" Height="34" Padding="16,0" Margin="8,0,0,0">
+            <TextBlock Text="Nueva máquina" Foreground="{DynamicResource T_sobreAcento}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          </Border>
+        </Grid>
+        <Border x:Name="ApPrevia" Margin="0,14,0,0"/>
+        <TextBlock Text="Así se ve la lista de Mis máquinas con tu vista y tamaño." Foreground="{DynamicResource T_placeholder}" FontSize="11.5" Margin="0,14,0,0"/>
+      </StackPanel>
+    </ContentControl>
+  </Grid>
+</Grid>

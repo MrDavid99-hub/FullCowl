@@ -1,0 +1,62 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="24,14,24,20">
+    <Border CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9" Margin="0,0,0,16">
+      <StackPanel Orientation="Horizontal">
+        <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Ficha}" Width="18" Height="18" Foreground="{DynamicResource T_acentoClaro}" VerticalAlignment="Center"/>
+        <TextBlock Foreground="{DynamicResource T_acentoClaro}" FontWeight="Medium" Margin="10,0,0,0" TextWrapping="Wrap" Text="Un documento con las IP, los usuarios y los roles de cada máquina, para la memoria de la práctica. No enciende ni toca las máquinas, y nunca lleva la contraseña."/>
+      </StackPanel>
+    </Border>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Formato"/>
+    <UniformGrid Columns="2">
+      <RadioButton x:Name="OpFichaPdf" Style="{StaticResource TarjetaOpcion}" GroupName="FormatoFicha" IsChecked="True" Margin="0,0,5,0">
+        <StackPanel>
+          <TextBlock Text="PDF" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock Text="Para entregar o imprimir, con el esquema de la red." FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}" Margin="0,2,0,0"/>
+        </StackPanel>
+      </RadioButton>
+      <RadioButton x:Name="OpFichaMd" Style="{StaticResource TarjetaOpcion}" GroupName="FormatoFicha" Margin="5,0,0,0">
+        <StackPanel>
+          <TextBlock Text="Texto" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <TextBlock Text="Un archivo .md con tablas, para pegar en Word." FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}" Margin="0,2,0,0"/>
+        </StackPanel>
+      </RadioButton>
+    </UniformGrid>
+
+    <Grid Margin="0,14,0,0">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions>
+      <StackPanel>
+        <TextBlock Style="{StaticResource Rotulo}" Text="Título de la práctica (opcional)"/>
+        <TextBox x:Name="FichaTitulo" Style="{StaticResource Campo}" MaxLength="120" AutomationProperties.Name="Título de la práctica"/>
+      </StackPanel>
+      <StackPanel Grid.Column="2">
+        <TextBlock Style="{StaticResource Rotulo}" Text="Autor"/>
+        <TextBox x:Name="FichaAutor" Style="{StaticResource Campo}" MaxLength="80" AutomationProperties.Name="Autor"/>
+      </StackPanel>
+    </Grid>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Qué incluir" Margin="0,14,0,4"/>
+    <WrapPanel>
+      <CheckBox x:Name="ChkFichaEsquema" Style="{StaticResource Casilla}" Content="Esquema de la red" IsChecked="True" Margin="0,0,18,6"/>
+      <CheckBox x:Name="ChkFichaUsuarios" Style="{StaticResource Casilla}" Content="Usuarios" IsChecked="True" Margin="0,0,18,6"/>
+      <CheckBox x:Name="ChkFichaRecursos" Style="{StaticResource Casilla}" Content="Recursos (RAM, procesadores, disco)" IsChecked="True" Margin="0,0,18,6"/>
+      <CheckBox x:Name="ChkFichaNotas" Style="{StaticResource Casilla}" Content="Espacio para notas" Margin="0,0,0,6"/>
+    </WrapPanel>
+
+    <TextBlock Style="{StaticResource Rotulo}" Text="Guardar en" Margin="0,10,0,0"/>
+    <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+      <TextBox x:Name="FichaCarpeta" Style="{StaticResource Campo}" AutomationProperties.Name="Carpeta donde guardar"/>
+      <Button x:Name="BtnFichaCambiar" Grid.Column="2" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Carpeta}" Content="Cambiar…" Height="34"/>
+    </Grid>
+    <CheckBox x:Name="ChkFichaAbrir" Style="{StaticResource Casilla}" Content="Abrir al terminar" IsChecked="True" Margin="0,12,0,0"/>
+    <TextBlock x:Name="FichaAviso" Style="{StaticResource Nota}" Margin="0,10,0,0" Text="Las fichas se guardan una por laboratorio. En formato Texto no va el esquema de la red."/>
+  </StackPanel>
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button x:Name="BtnFichaNo" Style="{StaticResource BotonSecundario}" Content="Cancelar" MinWidth="104"/>
+      <Button x:Name="BtnFichaOk" Style="{StaticResource BotonPrimario}" Tag="{StaticResource Ico_Ficha}" Content="Crear ficha" Margin="8,0,0,0"/>
+    </StackPanel>
+  </Border>
+</Grid>

@@ -1,0 +1,183 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="24,14,24,20">
+    <Border CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9" Margin="0,0,0,14">
+      <StackPanel>
+        <TextBlock x:Name="MaquinasRed" Foreground="{DynamicResource T_acentoClaro}" FontWeight="Medium" TextWrapping="Wrap"/>
+        <TextBlock x:Name="InfoRed" Style="{StaticResource Nota}" Foreground="{DynamicResource T_acentoClaro}" Margin="0,3,0,0"/>
+      </StackPanel>
+    </Border>
+    <Border x:Name="CajaTarj1" CornerRadius="10" Background="{DynamicResource T_campo}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,12" Margin="0,0,0,10">
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="30" Height="30" CornerRadius="9" Background="{DynamicResource T_neutro}" Margin="0,0,10,0">
+              <TextBlock x:Name="IcoTarj1" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <CheckBox x:Name="ChkTarj1" Style="{StaticResource Casilla}" Content="Tarjeta 1" FontWeight="Medium" VerticalAlignment="Center"/>
+          </StackPanel>
+          <ComboBox x:Name="RedTarj1" Grid.Column="1" Style="{StaticResource Combo}"/>
+          <ComboBox x:Name="ModoTarj1" Grid.Column="3" Style="{StaticResource Combo}">
+            <ComboBoxItem Content="IP: no tocar"/>
+            <ComboBoxItem Content="IP automática (DHCP)"/>
+            <ComboBoxItem Content="IP fija"/>
+          </ComboBox>
+        </Grid>
+        <Grid x:Name="FijaTarj1" Margin="160,10,0,0" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/><ColumnDefinition Width="8"/><ColumnDefinition Width="52"/><ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="120"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Primera IP"/>
+            <TextBox x:Name="IpTarj1" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Prefijo"/>
+            <TextBox x:Name="PreTarj1" Style="{StaticResource Campo}" Text="24"/>
+          </StackPanel>
+          <StackPanel Grid.Column="4">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Puerta de enlace"/>
+            <TextBox x:Name="GwTarj1" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="6">
+            <TextBlock Style="{StaticResource Rotulo}" Text="DNS (separados por comas)"/>
+            <TextBox x:Name="DnsTarj1" Style="{StaticResource Campo}"/>
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+    </Border>
+    <Border x:Name="CajaTarj2" CornerRadius="10" Background="{DynamicResource T_campo}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,12" Margin="0,0,0,10">
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="30" Height="30" CornerRadius="9" Background="{DynamicResource T_neutro}" Margin="0,0,10,0">
+              <TextBlock x:Name="IcoTarj2" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <CheckBox x:Name="ChkTarj2" Style="{StaticResource Casilla}" Content="Tarjeta 2" FontWeight="Medium" VerticalAlignment="Center"/>
+          </StackPanel>
+          <ComboBox x:Name="RedTarj2" Grid.Column="1" Style="{StaticResource Combo}"/>
+          <ComboBox x:Name="ModoTarj2" Grid.Column="3" Style="{StaticResource Combo}">
+            <ComboBoxItem Content="IP: no tocar"/>
+            <ComboBoxItem Content="IP automática (DHCP)"/>
+            <ComboBoxItem Content="IP fija"/>
+          </ComboBox>
+        </Grid>
+        <Grid x:Name="FijaTarj2" Margin="160,10,0,0" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/><ColumnDefinition Width="8"/><ColumnDefinition Width="52"/><ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="120"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Primera IP"/>
+            <TextBox x:Name="IpTarj2" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Prefijo"/>
+            <TextBox x:Name="PreTarj2" Style="{StaticResource Campo}" Text="24"/>
+          </StackPanel>
+          <StackPanel Grid.Column="4">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Puerta de enlace"/>
+            <TextBox x:Name="GwTarj2" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="6">
+            <TextBlock Style="{StaticResource Rotulo}" Text="DNS (separados por comas)"/>
+            <TextBox x:Name="DnsTarj2" Style="{StaticResource Campo}"/>
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+    </Border>
+    <Border x:Name="CajaTarj3" CornerRadius="10" Background="{DynamicResource T_campo}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,12" Margin="0,0,0,10">
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="30" Height="30" CornerRadius="9" Background="{DynamicResource T_neutro}" Margin="0,0,10,0">
+              <TextBlock x:Name="IcoTarj3" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <CheckBox x:Name="ChkTarj3" Style="{StaticResource Casilla}" Content="Tarjeta 3" FontWeight="Medium" VerticalAlignment="Center"/>
+          </StackPanel>
+          <ComboBox x:Name="RedTarj3" Grid.Column="1" Style="{StaticResource Combo}"/>
+          <ComboBox x:Name="ModoTarj3" Grid.Column="3" Style="{StaticResource Combo}">
+            <ComboBoxItem Content="IP: no tocar"/>
+            <ComboBoxItem Content="IP automática (DHCP)"/>
+            <ComboBoxItem Content="IP fija"/>
+          </ComboBox>
+        </Grid>
+        <Grid x:Name="FijaTarj3" Margin="160,10,0,0" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/><ColumnDefinition Width="8"/><ColumnDefinition Width="52"/><ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="120"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Primera IP"/>
+            <TextBox x:Name="IpTarj3" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Prefijo"/>
+            <TextBox x:Name="PreTarj3" Style="{StaticResource Campo}" Text="24"/>
+          </StackPanel>
+          <StackPanel Grid.Column="4">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Puerta de enlace"/>
+            <TextBox x:Name="GwTarj3" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="6">
+            <TextBlock Style="{StaticResource Rotulo}" Text="DNS (separados por comas)"/>
+            <TextBox x:Name="DnsTarj3" Style="{StaticResource Campo}"/>
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+    </Border>
+    <Border x:Name="CajaTarj4" CornerRadius="10" Background="{DynamicResource T_campo}" BorderBrush="{DynamicResource T_borde}" BorderThickness="1" Padding="14,12" Margin="0,0,0,10">
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="160"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions>
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Border Width="30" Height="30" CornerRadius="9" Background="{DynamicResource T_neutro}" Margin="0,0,10,0">
+              <TextBlock x:Name="IcoTarj4" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <CheckBox x:Name="ChkTarj4" Style="{StaticResource Casilla}" Content="Tarjeta 4" FontWeight="Medium" VerticalAlignment="Center"/>
+          </StackPanel>
+          <ComboBox x:Name="RedTarj4" Grid.Column="1" Style="{StaticResource Combo}"/>
+          <ComboBox x:Name="ModoTarj4" Grid.Column="3" Style="{StaticResource Combo}">
+            <ComboBoxItem Content="IP: no tocar"/>
+            <ComboBoxItem Content="IP automática (DHCP)"/>
+            <ComboBoxItem Content="IP fija"/>
+          </ComboBox>
+        </Grid>
+        <Grid x:Name="FijaTarj4" Margin="160,10,0,0" Visibility="Collapsed">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/><ColumnDefinition Width="8"/><ColumnDefinition Width="52"/><ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="120"/><ColumnDefinition Width="8"/><ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Primera IP"/>
+            <TextBox x:Name="IpTarj4" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Prefijo"/>
+            <TextBox x:Name="PreTarj4" Style="{StaticResource Campo}" Text="24"/>
+          </StackPanel>
+          <StackPanel Grid.Column="4">
+            <TextBlock Style="{StaticResource Rotulo}" Text="Puerta de enlace"/>
+            <TextBox x:Name="GwTarj4" Style="{StaticResource Campo}"/>
+          </StackPanel>
+          <StackPanel Grid.Column="6">
+            <TextBlock Style="{StaticResource Rotulo}" Text="DNS (separados por comas)"/>
+            <TextBox x:Name="DnsTarj4" Style="{StaticResource Campo}"/>
+          </StackPanel>
+        </Grid>
+      </StackPanel>
+    </Border>
+    <CheckBox x:Name="PingRed" Style="{StaticResource Casilla}" Content="Permitir ping entre ellas (Windows lo bloquea por defecto)" IsChecked="True" Margin="0,4,0,0"/>
+    <TextBlock x:Name="PrevRed" Style="{StaticResource Nota}" Margin="0,10,0,0"/>
+  </StackPanel>
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button x:Name="BtnRedNo" Style="{StaticResource BotonSecundario}" Content="Cancelar" MinWidth="104"/>
+      <Button x:Name="BtnRedOk" Style="{StaticResource BotonPrimario}" Tag="&#xE839;" Content="Aplicar" MinWidth="120" Margin="8,0,0,0"/>
+    </StackPanel>
+  </Border>
+</Grid>

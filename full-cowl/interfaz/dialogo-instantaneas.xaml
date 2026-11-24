@@ -1,0 +1,61 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <Grid Margin="24,16,24,20">
+    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <Grid Height="230">
+      <ListBox x:Name="ListaSnap" Style="{StaticResource ListaSimple}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid Margin="2,4">
+              <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+              <Ellipse Width="10" Height="10" Fill="{DynamicResource T_acento}" VerticalAlignment="Center" Margin="2,0,12,0"/>
+              <TextBlock Grid.Column="1" Text="{Binding}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+              <TextBlock Grid.Column="2" Text="recién creada" FontSize="11.5" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Center" Margin="10,0,4,0">
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding}" Value="inicio"><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <TextBlock x:Name="SinSnap" Text="Esta máquina no tiene instantáneas." Style="{StaticResource Nota}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
+    </Grid>
+    <StackPanel Grid.Column="1" Margin="14,0,0,0" Width="150">
+      <Button x:Name="BtnSnapNueva" Style="{StaticResource BotonPrimario}" Tag="&#xE722;" Content="Nueva…" Margin="0,0,0,8"/>
+      <Button x:Name="BtnSnapVolver" Style="{StaticResource BotonSecundario}" Tag="&#xE7A7;" Content="Volver a esta" Margin="0,0,0,8"/>
+      <Button x:Name="BtnSnapBorrar" Style="{StaticResource BotonPeligro}" Tag="{StaticResource Ico_Limpiar}" Content="Borrar"/>
+    </StackPanel>
+    <!-- Mientras VMware trabaja (la ventana sigue respondiendo): texto y una barra que va y viene -->
+    <StackPanel x:Name="SnapTrabajando" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,14,0,0" Visibility="Collapsed">
+      <TextBlock x:Name="SnapTrabajandoTexto" Style="{StaticResource Nota}" Foreground="{DynamicResource T_texto}" Margin="0,0,0,8"/>
+      <Grid Height="4" ClipToBounds="True">
+        <Border CornerRadius="2" Background="{DynamicResource T_linea}"/>
+        <Border Width="110" CornerRadius="2" Background="{DynamicResource T_acento}" HorizontalAlignment="Left">
+          <Border.RenderTransform><TranslateTransform X="-110"/></Border.RenderTransform>
+          <Border.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+              <BeginStoryboard>
+                <Storyboard RepeatBehavior="Forever">
+                  <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" From="-110" To="480" Duration="0:0:1.3"/>
+                </Storyboard>
+              </BeginStoryboard>
+            </EventTrigger>
+          </Border.Triggers>
+        </Border>
+      </Grid>
+    </StackPanel>
+    <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,14,0,0" CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9">
+      <TextBlock Style="{StaticResource Nota}" Foreground="{DynamicResource T_acentoClaro}" Text="«inicio» es la de recién creada: volver a ella repite la configuración automática del primer arranque."/>
+    </Border>
+  </Grid>
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <Button x:Name="BtnSnapCerrar" Style="{StaticResource BotonSecundario}" Content="Cerrar" MinWidth="104" HorizontalAlignment="Right"/>
+  </Border>
+</Grid>

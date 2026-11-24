@@ -1,0 +1,52 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Iconos de linea de Full Cowl: 22 trazados para una cuadricula de 24 x 24, sin relleno. Se pintan
+       con el estilo Icono (estilos.xaml), que los escala al tamano pedido y usa el Foreground como color
+       del trazo. Uso: un ContentControl con Style Icono, Content igual al recurso y Width y Height. En los
+       botones y el menu basta con poner el recurso en Tag. Los logos de sistema estan en logos.xaml. -->
+  <StreamGeometry x:Key="Ico_Inicio">M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Maquinas">M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-8a2 2 0 0 1 2 -2zM8 20h8M12 16v4</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Laboratorio">M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Nueva">M12 5v14M5 12h14</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Base">M4 5a8 3 0 1 0 16 0a8 3 0 1 0 -16 0M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Importar">M12 3v12M7 10l5 5 5-5M4 19h16</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Ajustes">M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M13 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M7 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M15 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Flecha">M5 12h14M13 6l6 6-6 6</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Aviso">M12 3l10 18H2zM12 10v5M12 18h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Info">M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0M12 11v5M12 8h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Buscar">M4 11a7 7 0 1 0 14 0a7 7 0 1 0 -14 0M20 20l-3.5-3.5</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Actualizar">M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Encender">M7 4.5v15l12-7.5z</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Apagar">M12 3v8M6.3 6.8a8 8 0 1 0 11.4 0</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Abrir">M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Carpeta">M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Instantaneas">M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zM8.5 13a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0 -7 0</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Red">M10 3h4a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1zM4 16h4a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1zM16 16h4a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1zM12 8v4M6 16v-4h12v4</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Conectar">M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Archivos">M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Usuarios">M5.5 8a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0 -7 0M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14a6.5 6.5 0 0 1 3 6</StreamGeometry>
+  <!-- Disco duro: caja con la bandeja y una luz (Ajustes → Espacio y limpieza) -->
+  <StreamGeometry x:Key="Ico_Disco">M4.5 5h15l2 9v4a1 1 0 0 1-1 1h-17a1 1 0 0 1-1-1v-4zM2.5 14h19M6.5 16.6h.01M10 16.6h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Limpiar">M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6</StreamGeometry>
+  <!-- Simbolos de sistema (ficha 5): trazos de 24 x 24 que se pintan en blanco (trazo 1,8, extremos redondeados) sobre una pastilla de color -->
+  <StreamGeometry x:Key="SisKali">M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6zM9 10l2.5 2L9 14M13 14h2.5</StreamGeometry>
+  <StreamGeometry x:Key="SisParrot">M5 19c0-8 5-13 14-14 0 9-5 14-14 14zM5 19L15 9M9 15.5l3-.5M11.2 13.2l3-.4</StreamGeometry>
+  <StreamGeometry x:Key="SisDebian">M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5zM3.5 7.5L12 12l8.5-4.5M12 12v9</StreamGeometry>
+  <StreamGeometry x:Key="SisLubuntu">M13 3L5 14h6l-1 7 8-11h-6z</StreamGeometry>
+  <StreamGeometry x:Key="SisRocky">M2.5 19.5L9 8l4 7 2.5-4 6 8.5zM9 8l1.4 2.4</StreamGeometry>
+  <StreamGeometry x:Key="SisCortafuegos">M3.5 5h17v14h-17zM3.5 9.7h17M3.5 14.3h17M9 5v4.7M15 5v4.7M12 9.7v4.6M7 14.3v4.7M17 14.3v4.7</StreamGeometry>
+  <StreamGeometry x:Key="SisProxmox">M12 3l9 4.5-9 4.5L3 7.5zM3 12l9 4.5 9-4.5M3 16.5L12 21l9-4.5</StreamGeometry>
+  <StreamGeometry x:Key="SisOtro">M5 4h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM8 20h8M12 16v4M10.2 8.6a1.9 1.9 0 1 1 2.6 1.8c-.5.3-.8.7-.8 1.2M12 13h.01</StreamGeometry>
+  <!-- Ajustes (ficha 10) -->
+  <StreamGeometry x:Key="Ico_Persona">M8 8a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M4 20a8 8 0 0 1 16 0</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Ayuda">M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0M9.6 9.4a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.7M12 17h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Paleta">M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.6 0-1.4-1.2-1.7-1.2-2.9 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.4 17 3 12 3zM7.5 11h.01M10 7.5h.01M14.5 7.5h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Atras">M15 6l-6 6 6 6</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Copiar">M9 9h10v10H9zM5 15V5h10</StreamGeometry>
+  <!-- Notas y etiquetas (ficha 18) -->
+  <StreamGeometry x:Key="Ico_Cerrar">M6 6l12 12M18 6L6 18</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Etiqueta">M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8zM7.5 7.5h.01</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Deshacer">M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Ficha">M6 3h8l5 5v13H6zM14 3v5h5M9.5 12h6M9.5 15.5h6M9.5 18.5h3</StreamGeometry>
+  <StreamGeometry x:Key="Ico_Documento">M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6</StreamGeometry>
+</ResourceDictionary>

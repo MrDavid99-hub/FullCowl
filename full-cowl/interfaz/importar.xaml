@@ -1,0 +1,151 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaImp">
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+
+  <!-- Cabecera -->
+  <Grid>
+    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel>
+      <TextBlock Style="{StaticResource TituloPagina}" Text="Importar"/>
+      <TextBlock Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,0" Text="Trae a este PC una máquina completa de otro Full Cowl (o de VMware). No necesita ninguna base."/>
+    </StackPanel>
+    <Button x:Name="BtnImportar" Grid.Column="1" Style="{StaticResource BotonPrimario}" Tag="&#xE896;" Content="Importar" VerticalAlignment="Center"/>
+  </Grid>
+
+  <Grid Grid.Row="1" Margin="0,18,-10,0">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition x:Name="ImpColGap" Width="18"/>
+      <ColumnDefinition x:Name="ImpColRes" Width="300"/>
+    </Grid.ColumnDefinitions>
+
+    <ScrollViewer Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+      <StackPanel x:Name="ImpPila" Margin="0,2,0,0">
+        <!-- 1. Qué importar -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+              <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+                <TextBlock Text="1" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Style="{StaticResource TituloTarjeta}" Text="Qué importar" Margin="0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <!-- Zona donde soltar -->
+            <Grid x:Name="ImpZona" AllowDrop="True" Background="Transparent" Cursor="Hand">
+              <Rectangle x:Name="ImpZonaBorde" RadiusX="12" RadiusY="12" StrokeThickness="1.5" StrokeDashArray="4,3" Stroke="{DynamicResource T_borde}" Fill="{DynamicResource T_campo}"/>
+              <StackPanel x:Name="ImpZonaVacia" Margin="16,22" HorizontalAlignment="Center">
+                <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Importar}" Width="30" Height="30" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Suelta aquí la máquina" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                <TextBlock Text=".ova, .ovf, .zip, .7z, o una carpeta con un .vmx" FontSize="12" Foreground="{DynamicResource T_textoSuave}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+              </StackPanel>
+              <Grid x:Name="ImpZonaFicha" Margin="16,14" Visibility="Collapsed">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_neutro}">
+                  <TextBlock x:Name="ImpFichaGlifo" FontFamily="Segoe MDL2 Assets" FontSize="20" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                  <TextBlock x:Name="ImpFichaNombre" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextTrimming="CharacterEllipsis"/>
+                  <TextBlock x:Name="ImpFichaSub" Style="{StaticResource Nota}" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <Button x:Name="BtnImpQuitar" Grid.Column="2" Style="{StaticResource BotonSecundario}" Content="Cambiar" Height="30" Margin="10,0,0,0"/>
+              </Grid>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+              <Button x:Name="BtnImpArchivo" Style="{StaticResource BotonSecundario}" Content="Archivo…" Height="34"/>
+              <Button x:Name="BtnImpCarpeta" Style="{StaticResource BotonSecundario}" Content="Carpeta…" Height="34" Margin="8,0,0,0"/>
+            </StackPanel>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,12,0,0"><Run Text="¿Buscas un laboratorio completo? Para un .fclab, suéltalo en cualquier parte de la ventana. "/><Hyperlink x:Name="ImpEjemplosLab" Foreground="{DynamicResource T_acento}"><Run Text="Ver laboratorios de ejemplo"/></Hyperlink></TextBlock>
+            <TextBlock Style="{StaticResource Rotulo}" Text="O escribe la ruta" Margin="0,14,0,5"/>
+            <TextBox x:Name="ImpOrigen" Style="{StaticResource Campo}"/>
+            <TextBlock x:Name="ImpOrigenNota" Style="{StaticResource Nota}" Margin="0,8,0,0" Text="Un .vmx suelto vale: se importa la carpeta que lo contiene."/>
+          </StackPanel>
+        </ContentControl>
+
+        <!-- 2. Nombre -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+              <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+                <TextBlock Text="2" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Style="{StaticResource TituloTarjeta}" Text="Nombre en este PC" Margin="0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBox x:Name="ImpNombre" Style="{StaticResource Campo}"/>
+            <TextBlock x:Name="ImpNombreNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+          </StackPanel>
+        </ContentControl>
+
+        <!-- 3. Cómo entra Full Cowl -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+              <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+                <TextBlock Text="3" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Style="{StaticResource TituloTarjeta}" Text="Cómo entra Full Cowl en ella" Margin="0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Usuario de la máquina"/>
+            <TextBox x:Name="ImpUsuario" Style="{StaticResource Campo}"/>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Solo se usa si la máquina no trae ya apuntado su usuario (las de otro Full Cowl lo traen)."/>
+            <CheckBox x:Name="ImpMismaClave" Style="{StaticResource Casilla}" IsChecked="True" Margin="0,14,0,0"
+                      Content="Su contraseña es la misma que la de las máquinas de este PC"/>
+          </StackPanel>
+        </ContentControl>
+
+        <!-- 4. Antes de empezar -->
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,18">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+              <Border Width="26" Height="26" CornerRadius="13" Background="{DynamicResource T_campo}" Margin="0,0,10,0">
+                <TextBlock Text="4" FontWeight="SemiBold" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Border>
+              <TextBlock Style="{StaticResource TituloTarjeta}" Text="Antes de empezar" Margin="0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <ItemsControl x:Name="ImpNotas"/>
+          </StackPanel>
+        </ContentControl>
+
+      <!-- Progreso -->
+      <ContentControl Style="{StaticResource Tarjeta}" Padding="22,18" Margin="0,0,0,28">
+        <StackPanel>
+          <Grid>
+            <TextBlock Style="{StaticResource TituloTarjeta}" Text="Progreso"/>
+            <TextBlock x:Name="ImpTiempo" Style="{StaticResource Nota}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,0,0"/>
+          </Grid>
+          <TextBlock x:Name="ImpProgTexto" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Text="Sin importaciones recientes."/>
+          <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <ProgressBar x:Name="ImpBarra" Style="{StaticResource Progreso}" Height="10" Maximum="100" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ImpPct" Grid.Column="1" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="14,0,0,0" MinWidth="52" TextAlignment="Right"/>
+          </Grid>
+          <Grid Margin="0,10,0,0" MinHeight="36">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock x:Name="ImpProgDet" Style="{StaticResource Nota}" VerticalAlignment="Center"/>
+            <Button x:Name="BtnImpCancelar" Grid.Column="1" Style="{StaticResource BotonPeligro}" Tag="&#xE711;" Content="Cancelar" Height="34" Margin="12,0,0,2" VerticalAlignment="Center" Visibility="Collapsed"/>
+          </Grid>
+        </StackPanel>
+      </ContentControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Resumen fijo -->
+    <ScrollViewer x:Name="ImpResHost" Grid.Column="2" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+      <ContentControl x:Name="ImpResTarjeta" Style="{StaticResource Tarjeta}" Padding="20,18" VerticalAlignment="Top" Margin="0,2,0,28">
+        <StackPanel>
+          <TextBlock Text="Resumen" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+          <StackPanel x:Name="ImpResLineas" Margin="0,14,0,0"/>
+          <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,6,0,12"/>
+          <TextBlock x:Name="ImpResEstimacion" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}" FontSize="13"/>
+          <TextBlock x:Name="ImpResAviso" TextWrapping="Wrap" Foreground="{DynamicResource T_aviso}" FontSize="13" FontWeight="Medium" Margin="0,8,0,0" Visibility="Collapsed"/>
+          <Rectangle Height="1" Fill="{DynamicResource T_linea}" Margin="0,12,0,12"/>
+          <TextBlock Style="{StaticResource Rotulo}" Text="Comprobaciones" Margin="0,0,0,6"/>
+          <StackPanel x:Name="ImpResChecks"/>
+          <Button x:Name="BtnImportar2" Style="{StaticResource BotonPrimario}" Tag="&#xE896;" Content="Importar" Margin="0,16,0,0" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+      </ContentControl>
+    </ScrollViewer>
+  </Grid>
+</Grid>

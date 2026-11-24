@@ -1,0 +1,57 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Ficha 37: «Acerca de Full Cowl». Solo colores T_… (claro, oscuro y modo sobrio). Lo que no aplica, no sale. -->
+  <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="28,8,28,20">
+    <!-- Cabecera -->
+    <Image x:Name="AcLogo" Width="84" Height="84" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+    <Image x:Name="AcTitulo" Height="22" HorizontalAlignment="Center" Margin="0,12,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+    <!-- Versión y estado -->
+    <TextBlock x:Name="AcVersion" HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="13.5" Foreground="{DynamicResource T_texto}"/>
+    <Border x:Name="AcInsignia" HorizontalAlignment="Center" CornerRadius="10" Padding="10,3" Margin="0,7,0,0" Visibility="Collapsed">
+      <TextBlock x:Name="AcInsigniaTxt" FontSize="12" FontWeight="SemiBold"/>
+    </Border>
+    <!-- Lema y descripción -->
+    <TextBlock HorizontalAlignment="Center" Margin="0,16,0,0" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Text="Máquinas y laboratorios de VMware, sin esperas."/>
+    <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,6,0,0" FontSize="13" Foreground="{DynamicResource T_textoSuave}"
+               Text="Crea una base una vez y saca máquinas y laboratorios completos en segundos: Windows, Linux y más, con red, usuarios y dominio listos."/>
+    <!-- Filas con etiqueta -->
+    <Border BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" Margin="0,18,0,0"/>
+    <Grid Margin="0,12,0,0">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="120"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+      <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <TextBlock Grid.Row="0" Style="{StaticResource Rotulo}" Text="Creado por" Margin="0,0,0,8"/>
+      <TextBlock Grid.Row="0" Grid.Column="1" x:Name="AcAutor" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Margin="0,0,0,8"/>
+      <TextBlock Grid.Row="1" x:Name="AcLicenciaRot" Style="{StaticResource Rotulo}" Text="Licencia" Margin="0,0,0,8" Visibility="Collapsed"/>
+      <TextBlock Grid.Row="1" Grid.Column="1" x:Name="AcLicencia" FontSize="13" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Margin="0,0,0,8" Visibility="Collapsed"
+                 Text="MIT · software libre, se ofrece «tal cual», sin garantía"/>
+      <TextBlock Grid.Row="2" Style="{StaticResource Rotulo}" Text="Hecho con" Margin="0,0,0,8"/>
+      <TextBlock Grid.Row="2" Grid.Column="1" FontSize="13" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Margin="0,0,0,8"
+                 Text="PowerShell y WPF · Packer (HashiCorp) · VMware Workstation · tipografía Inter"/>
+      <TextBlock Grid.Row="3" x:Name="AcGraciasRot" Style="{StaticResource Rotulo}" Text="Agradecimientos" Visibility="Collapsed"/>
+      <TextBlock Grid.Row="3" Grid.Column="1" x:Name="AcGracias" FontSize="13" Foreground="{DynamicResource T_texto}" TextWrapping="Wrap" Visibility="Collapsed"/>
+    </Grid>
+    <!-- Aviso de marcas -->
+    <Border Background="{DynamicResource T_campo}" CornerRadius="10" Padding="14,10" Margin="0,10,0,0">
+      <TextBlock x:Name="AcMarcas" FontSize="11.5" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+    </Border>
+    <!-- Enlaces (los que no aplican no salen) -->
+    <WrapPanel x:Name="AcEnlaces" HorizontalAlignment="Center" Margin="0,14,0,0">
+      <Button x:Name="BtnAcNovedades" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Documento}" Content="Novedades" Margin="4" AutomationProperties.Name="Abrir las novedades"/>
+      <Button x:Name="BtnAcManual" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Documento}" Content="Manual" Margin="4" AutomationProperties.Name="Abrir el manual"/>
+      <Button x:Name="BtnAcLicencia" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Documento}" Content="Licencia y avisos" Margin="4" Visibility="Collapsed" AutomationProperties.Name="Abrir la licencia y los avisos"/>
+      <Button x:Name="BtnAcGithub" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Abrir}" Content="GitHub" Margin="4" Visibility="Collapsed" AutomationProperties.Name="Abrir la página de GitHub"/>
+      <Button x:Name="BtnAcProblema" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Abrir}" Content="Informar de un problema" Margin="4" Visibility="Collapsed" AutomationProperties.Name="Informar de un problema en GitHub"/>
+    </WrapPanel>
+  </StackPanel>
+  <!-- Pie -->
+  <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" CornerRadius="0,0,14,14" Padding="24,14">
+    <DockPanel>
+      <Button x:Name="BtnAcCerrar" DockPanel.Dock="Right" Style="{StaticResource BotonPrimario}" Content="Cerrar" MinWidth="104" Margin="8,0,0,0" IsDefault="True" IsCancel="True" AutomationProperties.Name="Cerrar"/>
+      <StackPanel Orientation="Horizontal">
+        <Button x:Name="BtnAcBuscar" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Actualizar}" Content="Buscar actualizaciones" AutomationProperties.Name="Buscar actualizaciones"/>
+        <Button x:Name="BtnAcCopiar" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Copiar}" Content="Copiar información" Margin="8,0,0,0" AutomationProperties.Name="Copiar la información del equipo"
+                ToolTip="Copia las versiones de Full Cowl, Windows, VMware, Packer y PowerShell (sin rutas, usuario ni contraseña)"/>
+      </StackPanel>
+    </DockPanel>
+  </Border>
+</Grid>

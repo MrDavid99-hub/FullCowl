@@ -1,0 +1,38 @@
+{
+  "formato": 1,
+  "creadoCon": "Full Cowl 1.4.0",
+  "nombre": "Dominio con 2 clientes",
+  "descripcion": "Un controlador de dominio (Windows Server 2022) y dos clientes Windows 11 unidos al dominio empresa.local. Necesitas las bases WinServer2022 y Win11Pro.",
+  "red": {
+    "tipo": "nat",
+    "direcciones": "fija"
+  },
+  "dominio": {
+    "nombre": "empresa.local",
+    "netbios": "EMPRESA"
+  },
+  "desechable": true,
+  "ping": true,
+  "maquinas": [
+    {
+      "base": "WinServer2022",
+      "cantidad": 1,
+      "ram": 4096,
+      "cpus": 2,
+      "vram": 0,
+      "controlador": true,
+      "extras": [],
+      "etiquetas": []
+    },
+    {
+      "base": "Win11Pro",
+      "cantidad": 2,
+      "ram": 4096,
+      "cpus": 2,
+      "vram": 0,
+      "controlador": false,
+      "extras": [],
+      "etiquetas": []
+    }
+  ]
+}

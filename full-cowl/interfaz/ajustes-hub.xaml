@@ -1,0 +1,277 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="PaginaHub">
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+
+  <!-- Barra de un apartado: volver a la portada y saltar de uno a otro -->
+  <StackPanel x:Name="HubBarra" Orientation="Horizontal" Margin="0,0,0,14" Visibility="Collapsed">
+    <Button x:Name="HubVolver" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Atras}" Content="Ajustes" Height="32" Margin="0,0,16,0" AutomationProperties.Name="Volver a Ajustes"/>
+    <RadioButton x:Name="PillApariencia" Style="{StaticResource Chip}" GroupName="HubPill" Content="Apariencia"/>
+    <RadioButton x:Name="PillAct" Style="{StaticResource Chip}" GroupName="HubPill" Content="Actualizaciones"/>
+    <RadioButton x:Name="PillGeneral" Style="{StaticResource Chip}" GroupName="HubPill" Content="General"/>
+    <RadioButton x:Name="PillPc" Style="{StaticResource Chip}" GroupName="HubPill" Content="Este PC"/>
+    <RadioButton x:Name="PillEspacio" Style="{StaticResource Chip}" GroupName="HubPill" Content="Espacio y limpieza"/>
+    <RadioButton x:Name="PillAyuda" Style="{StaticResource Chip}" GroupName="HubPill" Content="Ayuda y registros"/>
+  </StackPanel>
+
+  <Grid x:Name="HubSecciones" Grid.Row="1">
+
+    <!-- ===== Portada ===== -->
+    <ScrollViewer x:Name="HubPortada" VerticalScrollBarVisibility="Auto" Padding="0,0,8,16">
+      <StackPanel>
+        <TextBlock Text="Ajustes" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+        <TextBlock Text="Todo lo de Full Cowl en este equipo. Elige un apartado." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,18"/>
+        <Grid Margin="0,0,-12,0">
+          <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <Button x:Name="TarjAp" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Apariencia">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Paleta}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Apariencia" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </StackPanel>
+            <TextBlock x:Name="ResAp1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResAp2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <Button x:Name="TarjAct" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="1" Grid.Row="0" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Actualizaciones">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Actualizar}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <WrapPanel Orientation="Horizontal">
+              <TextBlock Text="Actualizaciones" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" VerticalAlignment="Center"/>
+              <Border x:Name="ResActBadge" CornerRadius="9" Padding="8,2" Margin="8,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="ResActBadgeTxt" FontSize="11" FontWeight="SemiBold"/>
+              </Border>
+            </WrapPanel>
+            <TextBlock x:Name="ResAct1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResAct2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="34" Foreground="{DynamicResource T_textoSuave}" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <Button x:Name="TarjGen" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="General">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Persona}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="General" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </StackPanel>
+            <TextBlock x:Name="ResGen1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResGen2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <Button x:Name="TarjPc" VerticalAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Este PC">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Maquinas}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Este PC" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </StackPanel>
+            <TextBlock x:Name="ResPc1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResPc2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <Button x:Name="TarjAy" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="1" Grid.Row="1" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Ayuda y registros">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Ayuda}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Ayuda y registros" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </StackPanel>
+            <TextBlock x:Name="ResAy1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResAy2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <Button x:Name="TarjEsp" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Espacio y limpieza">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="44" Height="44" CornerRadius="12" Background="{DynamicResource T_campo}" VerticalAlignment="Top">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Disco}" Width="22" Height="22" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Espacio y limpieza" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            </StackPanel>
+            <TextBlock x:Name="ResEsp1" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap" Foreground="{DynamicResource T_texto}"/>
+            <TextBlock x:Name="ResEsp2" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Top"/>
+        </Grid>
+      </Button>
+      <!-- Ficha 37: abre la ventana «Acerca de» (no es un apartado: no tiene píldora en la barra) -->
+      <Button x:Name="TarjAcerca" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Style="{StaticResource TarjetaClic}" AutomationProperties.Name="Acerca de Full Cowl">
+        <Grid>
+          <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <Border Width="34" Height="34" CornerRadius="10" Background="{DynamicResource T_campo}" VerticalAlignment="Center">
+            <ContentControl Style="{StaticResource Icono}" Content="{StaticResource Ico_Info}" Width="18" Height="18" Foreground="{DynamicResource T_acento}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,8,0" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Acerca de Full Cowl" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ResAcerca" Margin="12,0,0,0" FontSize="12.5" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+          </StackPanel>
+          <ContentControl Grid.Column="2" Style="{StaticResource Icono}" Content="{StaticResource Ico_Flecha}" Width="18" Height="18" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Center"/>
+        </Grid>
+      </Button>
+        </Grid>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- ===== General ===== -->
+    <ScrollViewer x:Name="HubGeneral" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" Padding="0,0,8,16">
+      <StackPanel MaxWidth="620" HorizontalAlignment="Left">
+        <TextBlock Text="General" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,18,0,0"/>
+        <TextBlock Text="Se aplica al momento: no hay que guardar." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,16" TextWrapping="Wrap"/>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="20,18">
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Tu nombre (para el saludo de Inicio)"/>
+            <TextBox x:Name="GenNombre" Style="{StaticResource Campo}" Width="260" HorizontalAlignment="Left" MaxLength="24"/>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Si lo dejas vacío, se usa el nombre de tu usuario de Windows."/>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Al abrir Full Cowl, empezar en" Margin="0,20,0,5"/>
+            <ComboBox x:Name="GenInicio" Style="{StaticResource Combo}" Width="260" HorizontalAlignment="Left"/>
+          </StackPanel>
+        </ContentControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- ===== Este PC ===== -->
+    <Grid x:Name="HubPc" Visibility="Collapsed">
+      <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+      <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,8,16">
+        <StackPanel MaxWidth="680" HorizontalAlignment="Left">
+        <TextBlock Text="Este PC" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,18,0,0"/>
+        <TextBlock Text="Carpetas, usuario y contraseña de las máquinas." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,16" TextWrapping="Wrap"/>
+          <Border CornerRadius="9" Background="{DynamicResource T_infoFondo}" Padding="12,9" Margin="0,0,0,14">
+            <TextBlock Style="{StaticResource Nota}" Foreground="{DynamicResource T_acentoClaro}" Text="Dónde están las cosas en este PC. Se guarda solo aquí (config.local.json): cada equipo tiene sus carpetas y no se sube a GitHub."/>
+          </Border>
+          <ContentControl Style="{StaticResource Tarjeta}" Padding="20,18">
+            <StackPanel>
+              <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de ISOs"/>
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBox x:Name="PcIsos" Style="{StaticResource Campo}"/>
+                <Button x:Name="BtnPcIsos" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+              </Grid>
+              <TextBlock x:Name="PcIsosNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+              <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de máquinas" Margin="0,16,0,5"/>
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBox x:Name="PcVms" Style="{StaticResource Campo}"/>
+                <Button x:Name="BtnPcVms" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+              </Grid>
+              <TextBlock x:Name="PcVmsNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+              <TextBlock Style="{StaticResource Rotulo}" Text="Carpeta de las fichas del laboratorio" Margin="0,16,0,5"/>
+              <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBox x:Name="PcFichas" Style="{StaticResource Campo}" AutomationProperties.Name="Carpeta de las fichas del laboratorio"/>
+                <Button x:Name="BtnPcFichas" Grid.Column="1" Style="{StaticResource BotonSecundario}" Content="Examinar…" Height="34" Margin="8,0,0,0"/>
+              </Grid>
+              <TextBlock x:Name="PcFichasNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+
+              <TextBlock Style="{StaticResource Rotulo}" Text="Usuario de las máquinas" Margin="0,16,0,5"/>
+              <TextBox x:Name="PcUsuario" Style="{StaticResource Campo}" Width="220" HorizontalAlignment="Left" MaxLength="20"/>
+              <TextBlock x:Name="PcUsuarioNota" Style="{StaticResource Nota}" Margin="0,5,0,0"/>
+              <Border x:Name="PcUsuarioAviso" Visibility="Collapsed" CornerRadius="9" Background="{DynamicResource T_avisoFondo}" BorderBrush="{DynamicResource T_avisoBorde}" BorderThickness="1" Padding="12,9" Margin="0,10,0,0">
+                <TextBlock x:Name="PcUsuarioAvisoTexto" Foreground="{DynamicResource T_avisoTexto}" FontSize="12.5" TextWrapping="Wrap"/>
+              </Border>
+
+              <TextBlock Style="{StaticResource Rotulo}" Text="Contraseña de las máquinas" Margin="0,16,0,5"/>
+              <Button x:Name="BtnPcClave" Style="{StaticResource BotonSecundario}" Content="Cambiar contraseña…" HorizontalAlignment="Left" Height="34"/>
+              <TextBlock Style="{StaticResource Nota}" Margin="0,5,0,0" Text="Nunca se muestra. Se guarda cifrada y solo la puede leer tu usuario de Windows en este PC."/>
+            </StackPanel>
+          </ContentControl>
+        </StackPanel>
+      </ScrollViewer>
+      <Border Grid.Row="1" Background="{DynamicResource T_pie}" BorderBrush="{DynamicResource T_linea}" BorderThickness="0,1,0,0" Padding="0,12,8,0" Margin="0,4,0,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+          <Button x:Name="BtnPcGuardar" Style="{StaticResource BotonPrimario}" Content="Guardar cambios" MinWidth="140" Height="34"/>
+          <Button x:Name="BtnPcDescartar" Style="{StaticResource BotonSecundario}" Content="Descartar" MinWidth="104" Height="34" Margin="8,0,0,0"/>
+          <TextBlock x:Name="PcSucioTexto" Text="Hay cambios sin guardar." Foreground="{DynamicResource T_aviso}" VerticalAlignment="Center" Margin="14,0,0,0" Visibility="Collapsed"/>
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!-- ===== Actualizaciones ===== -->
+    <ScrollViewer x:Name="HubAct" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" Padding="0,0,8,16">
+      <StackPanel MaxWidth="620" HorizontalAlignment="Left">
+        <TextBlock Text="Actualizaciones" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,18,0,0"/>
+        <TextBlock Text="Full Cowl se actualiza desde GitHub sin que pierdas tus máquinas ni tus ajustes." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,16" TextWrapping="Wrap"/>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="20,18" Margin="0,0,0,12">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock x:Name="ActTitulo" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+              <Border x:Name="ActBadge" CornerRadius="9" Padding="8,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                <TextBlock x:Name="ActBadgeTxt" FontSize="11" FontWeight="SemiBold"/>
+              </Border>
+            </StackPanel>
+            <TextBlock x:Name="ActDetalle" Margin="0,6,0,0" TextWrapping="Wrap" Foreground="{DynamicResource T_textoSuave}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+              <Button x:Name="BtnActAhora" Style="{StaticResource BotonPrimario}" Tag="{StaticResource Ico_Actualizar}" Content="Actualizar ahora" Height="34" Visibility="Collapsed" Margin="0,0,8,0"/>
+              <Button x:Name="BtnActBuscar" Style="{StaticResource BotonSecundario}" Content="Buscar actualizaciones" Height="34"/>
+            </StackPanel>
+          </StackPanel>
+        </ContentControl>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="20,18">
+          <StackPanel>
+            <TextBlock Style="{StaticResource Rotulo}" Text="Al abrir Full Cowl"/>
+            <ComboBox x:Name="ActModo" Style="{StaticResource Combo}" Width="260" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="ActModoAyuda" Style="{StaticResource Nota}" Margin="0,6,0,0"/>
+          </StackPanel>
+        </ContentControl>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- ===== Ayuda y registros ===== -->
+    <ScrollViewer x:Name="HubAyuda" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" Padding="0,0,8,16">
+      <StackPanel MaxWidth="620" HorizontalAlignment="Left">
+        <TextBlock Text="Ayuda y registros" FontSize="26" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}" Margin="0,18,0,0"/>
+        <TextBlock Text="Para cuando algo falla o quieres saber qué ha cambiado." Foreground="{DynamicResource T_textoSuave}" Margin="0,4,0,16" TextWrapping="Wrap"/>
+        <ContentControl Style="{StaticResource Tarjeta}" Padding="20,18">
+          <StackPanel>
+            <TextBlock x:Name="AyVersion" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource T_texto}"/>
+            <UniformGrid Columns="2" Margin="-4,14,-4,0">
+              <Button x:Name="BtnAyNovedades" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Documento}" Content="Ver las novedades" Height="36" Margin="4"/>
+              <Button x:Name="BtnAyManual" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Documento}" Content="Abrir el manual" Height="36" Margin="4"/>
+              <Button x:Name="BtnAyRegistros" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Carpeta}" Content="Abrir la carpeta de registros" Height="36" Margin="4"/>
+              <Button x:Name="BtnAyCopiar" Style="{StaticResource BotonSecundario}" Tag="{StaticResource Ico_Copiar}" Content="Copiar información del equipo" Height="36" Margin="4"/>
+            </UniformGrid>
+            <TextBlock Style="{StaticResource Nota}" Margin="0,8,0,0" Text="La información del equipo lleva las versiones de Full Cowl, Windows, VMware y Packer. No incluye rutas personales, usuario ni contraseña."/>
+          </StackPanel>
+        </ContentControl>
+        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+          <TextBlock Text="¿Quieres repasar la configuración inicial?" Foreground="{DynamicResource T_textoSuave}" VerticalAlignment="Center"/>
+          <Button x:Name="HubRepetirAsistente" Style="{StaticResource BotonSecundario}" Content="Repetir el asistente de primer arranque" Height="32" Margin="12,0,0,0"/>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+
+  </Grid>
+</Grid>

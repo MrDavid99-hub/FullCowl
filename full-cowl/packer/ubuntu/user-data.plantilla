@@ -1,0 +1,42 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: {{LOCALE}}
+  keyboard:
+    layout: {{TECLADO}}
+  timezone: {{ZONA}}
+  # Descargas desde el servidor de España (español) o el general (inglés), sin geolocalizar
+  apt:
+    geoip: false
+    primary:
+      - arches: [default]
+        uri: {{ESPEJO}}
+  # Solo parches de seguridad durante la instalación
+  updates: security
+  # En una VM no hacen falta drivers ni códecs de terceros
+  drivers:
+    install: false
+{{CODECS}}
+  storage:
+    layout:
+      name: direct
+  ssh:
+    install-server: true
+    allow-pw: true
+{{FUENTE}}
+  # language-pack-<idioma>: traducciones (locale solo cambia el idioma elegido, no las instala)
+  packages:
+    - open-vm-tools
+    - {{LANGPACK}}
+{{PAQUETES_ESCRITORIO}}
+  user-data:
+    hostname: {{HOSTNAME}}
+    users:
+      - name: {{USER}}
+        groups: [adm, sudo]
+        shell: /bin/bash
+        lock_passwd: false
+        plain_text_passwd: {{PASS_JSON}}
+    ssh_pwauth: true
+  late-commands:
+    - curtin in-target -- systemctl enable ssh
