@@ -2,6 +2,11 @@
 
 Versiones publicadas de Full Cowl. Cada una se puede descargar en la página de *Releases*.
 
+## 2.0.1 · 24/11/2026
+
+- **Arreglo:** en un equipo recién instalado, Full Cowl podía no abrirse la primera vez y mostraba «No se puede enlazar el argumento con el parámetro 'Path' porque es una cadena vacía». Ya se abre con normalidad. Si instalaste la 2.0.0, usa «Buscar actualizaciones» o vuelve a ejecutar el comando de instalación.
+- El aviso que sale cuando la ventana no se puede abrir es ahora más claro y dice qué hacer.
+
 ## 2.0.0 · 24/11/2026
 
 Primera versión pública.

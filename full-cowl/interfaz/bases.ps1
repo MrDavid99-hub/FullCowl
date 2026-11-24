@@ -266,8 +266,8 @@ function Idioma-DeBaseExistente([string]$carpeta) {
     return [pscustomobject]@{ Idioma = [string](Resolver-Idioma $i).Clave; Zona = [string](Resolver-Zona $z).Clave }
 }
 function Pintar-BaseExiste($s) {
-    $carpeta = Join-Path $Config.CarpetaBases $s.Clave
-    if (Test-Path $carpeta) {
+    $carpeta = $(if ($Config.CarpetaBases) { Join-Path $Config.CarpetaBases $s.Clave } else { '' })
+    if ($carpeta -and (Test-Path -LiteralPath $carpeta)) {
         $ant = Idioma-DeBaseExistente $carpeta
         $txt = "Ya existe ($((Get-Item $carpeta).LastWriteTime.ToString('dd/MM/yyyy')), $(Texto-IdiomaZona $ant.Idioma $ant.Zona)): se rehará"
         $nuevaIdi = Clave-Combo $BaseIdioma
@@ -285,6 +285,8 @@ function Pintar-BaseExiste($s) {
 }
 function Idioma-DeIsoWindows([string]$iso) {
     # Pista por el nombre del archivo (las ISO de Microsoft lo llevan: es-es_windows_11..., ..._en-us.iso). '' si no se sabe.
+    # Sin ISO (un PC recién instalado sin ninguna que encaje) no hay pista: Split-Path con '' rompía la ventana al abrir
+    if (-not $iso) { return '' }
     $hoja = [string](Split-Path $iso -Leaf)
     if ($hoja -match '(?i)(^|[^a-z])es[-_]es([^a-z]|$)|spanish|espa') { return 'es' }
     if ($hoja -match '(?i)(^|[^a-z])en[-_](us|gb)([^a-z]|$)|english') { return 'en' }
@@ -443,8 +445,8 @@ function Actualizar-ResumenBase {
     $iso = $BaseIso.Text.Trim()
     $isoBien = ($iso -and (Test-Path -LiteralPath $iso -ErrorAction SilentlyContinue))
     $mb = Texto-AMb $BaseRam.Text; $cpus = Numero $BaseCpu.Text; $disco = Numero $BaseDisco.Text
-    $carpeta = Join-Path $Config.CarpetaBases $s.Clave
-    $existe = Test-Path $carpeta
+    $carpeta = $(if ($Config.CarpetaBases) { Join-Path $Config.CarpetaBases $s.Clave } else { '' })
+    $existe = [bool]($carpeta -and (Test-Path -LiteralPath $carpeta))
     $ResLineas.Children.Clear()
     [void]$ResLineas.Children.Add((Fila-Resumen 'ISO' $(if ($iso) { Split-Path $iso -Leaf } else { '—' })))
     [void]$ResLineas.Children.Add((Fila-Resumen 'RAM' $(if ($mb -ge 1024) { "$(Gb-Texto $mb) GB" } else { '—' })))

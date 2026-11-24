@@ -571,9 +571,9 @@ try { if ($script:hilo) { $script:hilo.Dispose() }; if ($script:espacio) { $scri
     try {
         $dirLog = Join-Path $PSScriptRoot 'estado'
         if (-not (Test-Path $dirLog)) { [void](New-Item -ItemType Directory -Path $dirLog) }
-        Add-Content -LiteralPath (Join-Path $dirLog 'interfaz.log') -Value ("[{0:dd/MM/yyyy HH:mm:ss}] No se pudo abrir la interfaz nueva: {1}" -f (Get-Date), $detalle) -Encoding UTF8
+        Add-Content -LiteralPath (Join-Path $dirLog 'interfaz.log') -Value ("[{0:dd/MM/yyyy HH:mm:ss}] No se pudo abrir la ventana: {1}" -f (Get-Date), $detalle) -Encoding UTF8
     } catch {}
     try {
-        [void][System.Windows.MessageBox]::Show("No se pudo abrir la interfaz nueva.`n`n$($_.Exception.Message)`n`nEl detalle está en full-cowl\estado\interfaz.log. La ventana de siempre («Full Cowl.bat») sigue funcionando.", 'Full Cowl', 'OK', 'Error')
+        [void][System.Windows.MessageBox]::Show("Full Cowl no se ha podido abrir.`n`n$($_.Exception.Message)`n`nPrueba «Actualizar.bat» (trae los archivos buenos). Si sigue igual, el detalle está en full-cowl\estado\interfaz.log: mándalo al avisar del fallo.", 'Full Cowl', 'OK', 'Error')
     } catch {}
 }
