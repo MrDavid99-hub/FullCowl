@@ -5,6 +5,7 @@ Versiones publicadas de Full Cowl. Cada una se puede descargar en la página de 
 ## 2.0.2 · 24/11/2026
 
 - **Arreglo:** las ISO guardadas en subcarpetas (por ejemplo `ISOs\Windows`, `ISOs\Linux`) no se encontraban. Ahora se buscan también dentro de las subcarpetas, hasta 3 niveles, en todas las pantallas.
+- **Arreglo:** al actualizar desde la aplicación o con `Actualizar.bat`, a veces decía que había fallado aunque sí se había actualizado. Ahora informa bien, y si la versión nueva aún se está preparando en GitHub, lo dice.
 - **`Actualizar.bat`** cierra Full Cowl solo si está abierto y lo vuelve a abrir al terminar. Si no puede copiar algún archivo, lo reintenta y dice cuál y por qué.
 
 ## 2.0.1 · 24/11/2026

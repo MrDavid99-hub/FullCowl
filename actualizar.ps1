@@ -127,8 +127,10 @@ function Poner-AlDiaDescarga {
         [void](New-Item -ItemType Directory -Path $tmp -Force)
         $zip = Join-Path $tmp 'Full-Cowl.zip'; $sumas = Join-Path $tmp 'SHA256SUMS.txt'
         try {
-            Descargar "https://github.com/$RepoPublico/releases/latest/download/SHA256SUMS.txt" $sumas
-            Descargar "https://github.com/$RepoPublico/releases/latest/download/Full-Cowl.zip" $zip 600000
+            # OJO: $null = ... Descargar devuelve $null al guardar en archivo, y sin esto esos $null salían como
+            # «resultado» de la función: Poner-AlDia parecía fallar (con un mensaje vacío) aunque hubiera actualizado
+            $null = Descargar "https://github.com/$RepoPublico/releases/latest/download/SHA256SUMS.txt" $sumas
+            $null = Descargar "https://github.com/$RepoPublico/releases/latest/download/Full-Cowl.zip" $zip 600000
         } catch { return "No se pudo descargar de GitHub. Comprueba la conexión a Internet. ($($_.Exception.Message))" }
         $linea = @(Get-Content -LiteralPath $sumas | Where-Object { $_ -match '\sFull-Cowl\.zip$' }) | Select-Object -First 1
         $esperada = $(if ($linea) { ($linea -split '\s+')[0].ToLower() } else { '' })
@@ -139,6 +141,12 @@ function Poner-AlDiaDescarga {
         Expand-Archive -LiteralPath $zip -DestinationPath $prog -Force
         $copiar = Join-Path $prog 'full-cowl\instalacion\programa.ps1'
         if (-not (Test-Path -LiteralPath $copiar)) { return 'La descarga no trae el programa completo: no se ha cambiado nada.' }
+        # VERSION del repositorio puede ir unos minutos por delante de la Release (GitHub la está construyendo)
+        $verZip = ''; try { $verZip = ([IO.File]::ReadAllText((Join-Path $prog 'VERSION'))).Trim() } catch {}
+        if ($verZip -and -not (Version-Mayor $verZip (Version-Actual))) {
+            $verRepo = ''; try { $verRepo = ([string](Descargar "https://raw.githubusercontent.com/$RepoPublico/main/VERSION" $null 10000)).Trim() } catch {}
+            if ($verRepo -and (Version-Mayor $verRepo $verZip)) { return "La versión $verRepo todavía se está preparando en GitHub (la descarga aún es la $verZip). Prueba otra vez dentro de unos minutos." }
+        }
         . $copiar
         try { $r = Copiar-Programa $prog $raiz }
         catch {
@@ -255,7 +263,7 @@ if ($Automatico) {
     if ($b.cambiosLocales -gt 0) { Registro "Automático: $($b.cambiosLocales) archivos cambiados a mano; no se actualiza."; exit 0 }
     if (Hay-TareasEnMarcha) { Registro 'Automático: hay una tarea en marcha; no se actualiza.'; exit 0 }
     $antes = Version-Actual
-    $fallo = Poner-AlDia
+    $fallo = (@(Poner-AlDia) | Where-Object { $_ } | ForEach-Object { [string]$_ }) -join ' '
     if ($fallo) { Registro "Automático: $fallo"; exit 0 }
     Accesos
     Registro "Automático: actualizado de $antes a $(Version-Actual)"
@@ -273,7 +281,7 @@ if ($Interfaz) {
     Start-Sleep -Milliseconds 600
     $cambios = @()
     try { $b = Buscar-Version; if ($b.hayNueva) { $cambios = @($b.cambios) } } catch {}
-    $fallo = Poner-AlDia
+    $fallo = (@(Poner-AlDia) | Where-Object { $_ } | ForEach-Object { [string]$_ }) -join ' '
     if ($fallo) {
         Registro "Fallo al actualizar desde Full Cowl: $fallo"
         Escribir-Json 'actualizar-error.json' ([ordered]@{ mensaje = $fallo; fecha = (Get-Date).ToString('dd/MM/yyyy HH:mm') })
@@ -304,7 +312,7 @@ if ($estabaAbierto) {
 }
 if (Hay-TareasEnMarcha) { Write-Host 'AVISO: hay una tarea de Full Cowl en marcha (crear una base, por ejemplo). Si falla, esperate a que termine y repite.' }
 Write-Host 'Buscando la ultima version...'
-$fallo = Poner-AlDia
+$fallo = (@(Poner-AlDia) | Where-Object { $_ } | ForEach-Object { [string]$_ }) -join ' '
 if ($fallo) {
     Registro "Actualizar.bat: $fallo"
     Write-Host ''; Write-Host $fallo
