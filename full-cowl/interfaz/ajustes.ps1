@@ -88,8 +88,8 @@ function Abrir-Ajustes([bool]$primeraVez = $false) {
     $revisar = {
         $ri = $e.AjIsos.Text.Trim()
         if ($ri -and (Test-Path -LiteralPath $ri)) {
-            $n = @(Get-ChildItem -LiteralPath $ri -Filter *.iso -ErrorAction SilentlyContinue).Count
-            $e.AjIsosNota.Text = "$(Plural $n 'ISO encontrada' 'ISO encontradas'). Se detectan solas: puedes añadir más cuando quieras."
+            $n = @(Listar-Isos $ri).Count
+            $e.AjIsosNota.Text = "$(Plural $n 'ISO encontrada' 'ISO encontradas') (también dentro de sus subcarpetas). Se detectan solas: puedes añadir más cuando quieras."
             $e.AjIsosNota.Foreground = Pincel $Colores.Suave
         } else {
             $e.AjIsosNota.Text = $(if ($ri) { 'Esa carpeta no existe.' } else { 'Elige la carpeta donde tienes las ISO.' })

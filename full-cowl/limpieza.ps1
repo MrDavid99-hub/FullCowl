@@ -483,7 +483,7 @@ function Analizar-Espacio($progreso) {
     } catch {}
     try {
         if ($Config.CarpetaISOs -and (Test-Path -LiteralPath $Config.CarpetaISOs)) {
-            foreach ($lzI in (New-Object IO.DirectoryInfo([string]$Config.CarpetaISOs)).EnumerateFiles('*.iso')) { $lzDisco.Isos += [double]$lzI.Length }
+            foreach ($lzI in @(Listar-Isos ([string]$Config.CarpetaISOs))) { $lzDisco.Isos += [double]$lzI.Length }
         }
     } catch {}
     $progreso.Disco = $lzDisco

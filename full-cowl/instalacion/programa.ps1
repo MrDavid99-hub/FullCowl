@@ -39,6 +39,18 @@ function Hash-Archivo([string]$ruta) {
     try { return (Get-FileHash -LiteralPath $ruta -Algorithm SHA256).Hash.ToLower() } catch { return '' }
 }
 
+function Copiar-ConReintentos([string]$de, [string]$a) {
+    # Windows, el antivirus o OneDrive pueden tener un archivo cogido unos segundos: se reintenta antes de rendirse,
+    # y si no se puede, el error dice QUÉ archivo y el motivo de verdad (no solo «algo está en uso»)
+    for ($i = 1; $i -le 6; $i++) {
+        try { Copy-Item -LiteralPath $de -Destination $a -Force -ErrorAction Stop; return }
+        catch {
+            if ($i -eq 6) { throw "No se pudo escribir «${a}»: $($_.Exception.Message)" }
+            Start-Sleep -Milliseconds 1500
+        }
+    }
+}
+
 function Copiar-Programa([string]$origen, [string]$destino) {
     # Devuelve @{ Copiados; Borrados; Respetados } (Respetados: archivos viejos cambiados a mano, que no se borran)
     $nuevo = Leer-Manifiesto (Join-Path $origen 'MANIFIESTO.txt')
@@ -60,7 +72,7 @@ function Copiar-Programa([string]$origen, [string]$destino) {
         if ((Test-Path -LiteralPath $a) -and (Hash-Archivo $de) -eq (Hash-Archivo $a)) { continue }
         $dirA = Split-Path $a
         if (-not (Test-Path -LiteralPath $dirA)) { [void](New-Item -ItemType Directory -Path $dirA -Force) }
-        Copy-Item -LiteralPath $de -Destination $a -Force
+        Copiar-ConReintentos $de $a
         $copiados++
     }
     foreach ($rel in @($viejo.Keys)) {
@@ -68,9 +80,12 @@ function Copiar-Programa([string]$origen, [string]$destino) {
         $a = Join-Path $destino ($rel.Replace('/', '\'))
         if (-not (Test-Path -LiteralPath $a)) { continue }
         # Solo si sigue como lo dejó la versión anterior: si alguien lo cambió a mano, se respeta
-        if ((Hash-Archivo $a) -eq $viejo[$rel]) { Remove-Item -LiteralPath $a -Force; $borrados++ } else { $respetados += $rel }
+        if ((Hash-Archivo $a) -eq $viejo[$rel]) {
+            try { Remove-Item -LiteralPath $a -Force -ErrorAction Stop } catch { throw "No se pudo quitar «${a}»: $($_.Exception.Message)" }
+            $borrados++
+        } else { $respetados += $rel }
     }
     $man = Join-Path $origen 'MANIFIESTO.txt'
-    if (Test-Path -LiteralPath $man) { Copy-Item -LiteralPath $man -Destination (Join-Path $destino 'MANIFIESTO.txt') -Force }
+    if (Test-Path -LiteralPath $man) { Copiar-ConReintentos $man (Join-Path $destino 'MANIFIESTO.txt') }
     return @{ Copiados = $copiados; Borrados = $borrados; Respetados = $respetados }
 }

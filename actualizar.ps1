@@ -141,7 +141,12 @@ function Poner-AlDiaDescarga {
         if (-not (Test-Path -LiteralPath $copiar)) { return 'La descarga no trae el programa completo: no se ha cambiado nada.' }
         . $copiar
         try { $r = Copiar-Programa $prog $raiz }
-        catch { return "No se pudo copiar la versión nueva (¿hay algún archivo en uso?). Cierra Full Cowl y repite. ($($_.Exception.Message))" }
+        catch {
+            # El motivo REAL va delante; la pista de «cierra Full Cowl» solo si de verdad parece un archivo en uso
+            $motivo = [string]$_.Exception.Message
+            $pista = $(if ($motivo -match 'otro proceso|being used|en uso|denegad|denied|Access') { ' Parece que algo está usando esos archivos: cierra Full Cowl y las consolas abiertas (y espera un minuto si OneDrive o el antivirus están mirando la carpeta) y repite.' } else { '' })
+            return "No se pudo copiar la versión nueva: $motivo$pista"
+        }
         Registro "Descarga: $($r.Copiados) archivos copiados, $($r.Borrados) quitados$(if ($r.Respetados.Count) { ", respetados (cambiados a mano): $($r.Respetados -join ', ')" })"
         return $null
     } finally {
@@ -163,6 +168,26 @@ function Hay-TareasEnMarcha {
         }
     } catch {}
     return $false
+}
+
+function Ventanas-FullCowlAbiertas {
+    # Procesos de la ventana de Full Cowl de ESTA carpeta (abrir-nueva / ventana-nueva); nunca este script
+    $ids = @()
+    try {
+        foreach ($pr in @(Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" -ErrorAction Stop)) {
+            if ($pr.ProcessId -eq $PID -or -not $pr.CommandLine) { continue }
+            if ($pr.CommandLine -notlike "*$raiz*") { continue }
+            if ($pr.CommandLine -match 'abrir-nueva|ventana-nueva') { $ids += [int]$pr.ProcessId }
+        }
+    } catch {}
+    return $ids
+}
+function Cerrar-FullCowl {
+    # Cierra la ventana (solo es la interfaz: las bases y las máquinas siguen). $true si ya no queda ninguna
+    foreach ($id in @(Ventanas-FullCowlAbiertas)) { try { Stop-Process -Id $id -Force -ErrorAction Stop } catch {} }
+    $reloj = [Diagnostics.Stopwatch]::StartNew()
+    while ($reloj.Elapsed.TotalSeconds -lt 10 -and @(Ventanas-FullCowlAbiertas).Count) { Start-Sleep -Milliseconds 400 }
+    return (@(Ventanas-FullCowlAbiertas).Count -eq 0)
 }
 
 # ---------------------------------------------------------------- buscar (sin tocar nada)
@@ -267,9 +292,25 @@ if (-not $modoDescarga -and -not (Hay-Git)) {
     Write-Host '   winget install --id Git.Git -e --source winget'
     exit 1
 }
+# Si Full Cowl esta abierto (o se ha quedado colgado con un aviso), se cierra solo: antes habia que hacerlo a mano
+$estabaAbierto = (@(Ventanas-FullCowlAbiertas).Count -gt 0)
+if ($estabaAbierto) {
+    Write-Host 'Full Cowl esta abierto: lo cierro para poder actualizar...'
+    if (-not (Cerrar-FullCowl)) {
+        Registro 'Actualizar.bat: no se pudo cerrar la ventana de Full Cowl.'
+        Write-Host 'No he podido cerrar Full Cowl. Cierralo tu (tambien desde el Administrador de tareas) y repite.'
+        exit 1
+    }
+}
+if (Hay-TareasEnMarcha) { Write-Host 'AVISO: hay una tarea de Full Cowl en marcha (crear una base, por ejemplo). Si falla, esperate a que termine y repite.' }
 Write-Host 'Buscando la ultima version...'
 $fallo = Poner-AlDia
-if ($fallo) { Write-Host ''; Write-Host $fallo; exit 1 }
+if ($fallo) {
+    Registro "Actualizar.bat: $fallo"
+    Write-Host ''; Write-Host $fallo
+    if ($estabaAbierto) { Reabrir-FullCowl }
+    exit 1
+}
 Write-Host ''
 Write-Host 'Version instalada:'
 if ($modoDescarga) { Write-Host "  $(Version-Actual)" }
@@ -277,4 +318,6 @@ else { $u = Git @('log', '-1', '"--format=  %cd  %s"', '--date=short') 15000; Wr
 Write-Host 'Actualizado.'
 Write-Host 'Revisando los accesos directos...'
 Accesos
+Registro "Actualizar.bat: version $(Version-Actual)"
+if ($estabaAbierto) { Write-Host 'Vuelvo a abrir Full Cowl...'; Reabrir-FullCowl }
 exit 0

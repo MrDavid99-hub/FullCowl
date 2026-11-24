@@ -118,8 +118,8 @@ function Pc-Sucio {
 function Revisar-Pc {
     $hbRi = $PcIsos.Text.Trim()
     if ($hbRi -and (Test-Path -LiteralPath $hbRi)) {
-        $hbN = @(Get-ChildItem -LiteralPath $hbRi -Filter *.iso -ErrorAction SilentlyContinue).Count
-        $PcIsosNota.Text = "$(Plural $hbN 'ISO encontrada' 'ISO encontradas'). Se detectan solas: puedes añadir más cuando quieras."
+        $hbN = @(Listar-Isos $hbRi).Count
+        $PcIsosNota.Text = "$(Plural $hbN 'ISO encontrada' 'ISO encontradas') (también dentro de sus subcarpetas). Se detectan solas: puedes añadir más cuando quieras."
         $PcIsosNota.Foreground = Pincel $Colores.Suave
     } else {
         $PcIsosNota.Text = $(if ($hbRi) { 'Esa carpeta no existe.' } else { 'Elige la carpeta donde tienes las ISO.' })

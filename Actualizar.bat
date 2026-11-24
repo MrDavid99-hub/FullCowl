@@ -8,7 +8,8 @@ REM OJO: si cambias a mano algun script, ese cambio se pierde al actualizar.
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0actualizar.ps1"
 if errorlevel 1 (
   echo.
-  echo Si falla porque hay archivos en uso, cierra Full Cowl y las consolas abiertas y repite.
+  echo Full Cowl se cierra solo si esta abierto. Si dice que hay archivos en uso, cierra las
+  echo consolas abiertas, espera un minuto y repite. El detalle queda en full-cowl\estado\actualizar.log
   pause
   exit /b 1
 )

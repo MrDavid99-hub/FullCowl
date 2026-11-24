@@ -66,7 +66,7 @@ function Sin-Acentos([string]$t) {
 function Pintar-SelectorBase([switch]$SoloFiltro) {
     # -SoloFiltro: viene del buscador (cada pulsación): no vuelve a mirar la carpeta de ISOs ni repinta chips de versión
     if (-not $SoloFiltro) { $script:nombresIso = @() }
-    try { if (-not $SoloFiltro -and $Config.CarpetaISOs) { $script:nombresIso = @(Get-ChildItem -LiteralPath $Config.CarpetaISOs -Filter *.iso -ErrorAction SilentlyContinue | ForEach-Object { $_.Name }) } } catch {}
+    try { if (-not $SoloFiltro -and $Config.CarpetaISOs) { $script:nombresIso = @(Listar-Isos $Config.CarpetaISOs | ForEach-Object { $_.Name }) } } catch {}
     $actual = Sistema-Actual
     $lineaActual = $(if ($actual) { Linea-Sistema $actual } else { '' })
     $lineas = [ordered]@{}
@@ -740,7 +740,7 @@ $posSis = [Array]::IndexOf([string[]]@($sistemas | ForEach-Object { $_.Clave }),
 if ($posSis -ge 0) { $script:claveBaseElegida = [string]$sistemas[$posSis].Clave }
 else {
     # Primera vez: la primera línea con ISO en la carpeta (si no hay ninguna, la primera del catálogo)
-    $script:nombresIso = @(); try { if ($Config.CarpetaISOs) { $script:nombresIso = @(Get-ChildItem -LiteralPath $Config.CarpetaISOs -Filter *.iso -ErrorAction SilentlyContinue | ForEach-Object { $_.Name }) } } catch {}
+    $script:nombresIso = @(); try { if ($Config.CarpetaISOs) { $script:nombresIso = @(Listar-Isos $Config.CarpetaISOs | ForEach-Object { $_.Name }) } } catch {}
     $primeroIso = @($sistemas | Where-Object { (Tiene-IsoSistema $_) -and -not $_.Antiguo }) | Select-Object -First 1
     $script:claveBaseElegida = [string]$(if ($primeroIso) { $primeroIso.Clave } else { $sistemas[0].Clave })
 }

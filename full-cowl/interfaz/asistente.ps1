@@ -374,8 +374,8 @@ function Abrir-Asistente([bool]$repetir = $false) {
         $ri = $a.AsIsos.Text.Trim()
         $a.AsIsosPildoras.Children.Clear()
         if ($ri -and (Test-Path -LiteralPath $ri)) {
-            $isos = @(Get-ChildItem -LiteralPath $ri -Filter *.iso -ErrorAction SilentlyContinue)
-            $a.AsIsosNota.Text = "$(Plural $isos.Count 'ISO encontrada' 'ISO encontradas'). Se detectan solas: puedes añadir más cuando quieras."
+            $isos = @(Listar-Isos $ri)
+            $a.AsIsosNota.Text = "$(Plural $isos.Count 'ISO encontrada' 'ISO encontradas') (también dentro de sus subcarpetas). Se detectan solas: puedes añadir más cuando quieras."
             Ref-Tema $a.AsIsosNota ([System.Windows.Controls.TextBlock]::ForegroundProperty) $(if ($isos.Count) { 'T_acentoClaro' } else { 'T_textoSuave' })
             $vistos = @{}
             foreach ($s in @(Obtener-Sistemas)) {
@@ -529,7 +529,7 @@ function Abrir-Asistente([bool]$repetir = $false) {
             [void]$a.AsResumen.Children.Add($g)
         }
         $ri = [string]$Config.CarpetaISOs; $nIsos = 0
-        try { $nIsos = @(Get-ChildItem -LiteralPath $ri -Filter *.iso -ErrorAction SilentlyContinue).Count } catch {}
+        try { $nIsos = @(Listar-Isos $ri).Count } catch {}
         & $fila 'ISOs' "$(Plural $nIsos 'ISO' 'ISOs') · $(Split-Path $ri -Leaf)"
         & $fila 'Máquinas' (Split-Path ([string]$Config.CarpetaVMs) -Leaf)
         & $fila 'Usuario' ([string]$Config.Usuario)

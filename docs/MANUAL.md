@@ -99,7 +99,9 @@ Los iconos están en la carpeta `iconos\`.
 
 Doble clic en **`Actualizar.bat`** (en la carpeta de Full Cowl). Deja todos los scripts exactamente como la última
 versión de GitHub y muestra la versión instalada. No toca nada propio del PC (ajustes, contraseña,
-preferencias), porque Git lo ignora.
+preferencias), porque Git lo ignora. Si Full Cowl está abierto (o se quedó con un aviso en pantalla), **lo cierra solo**
+antes de actualizar y lo vuelve a abrir al terminar. Si algún archivo está cogido (antivirus, OneDrive), reintenta unos
+segundos y, si no puede, dice **qué archivo** y el motivo; todo queda en `full-cowl/estado/actualizar.log`.
 
 **Instalado con el comando o el ZIP (sin Git):** `Actualizar.bat` y el botón de Full Cowl funcionan igual, pero sin Git:
 miran la versión en `raw.githubusercontent.com` (sin gastar el límite de la API de GitHub), descargan el ZIP de la última
@@ -145,7 +147,7 @@ primer arranque**. Lo que pide, en resumen:
 
 | Campo | Qué es |
 |---|---|
-| **Carpeta de ISOs** | Donde están las ISO. Indica cuántas encuentra. Se pueden añadir más en cualquier momento. |
+| **Carpeta de ISOs** | Donde están las ISO. Indica cuántas encuentra. Se pueden añadir más en cualquier momento. Pueden estar **ordenadas en subcarpetas** (`ISOs\Windows`, `ISOs\Linux`…): se buscan hasta 3 niveles por debajo. |
 | **Carpeta de máquinas** | Donde se guardan las máquinas (cada una en su subcarpeta) y las bases (en `\_Bases`). Propone la que tenga configurada VMware. |
 | **Usuario de las VMs** | Usuario que se crea **al hacer cada base** (administrador en Windows, `sudo` en Linux); sus máquinas lo heredan, porque son copias de la base. Solo minúsculas, números, `-` y `_`, empezando por letra (Linux no admite mayúsculas). Cambiarlo solo afecta a las bases nuevas: cada base recuerda con qué usuario se hizo (lo apunta en su `.vmx`) y Full Cowl entra en sus máquinas con ese. Para tener el usuario nuevo en todo, hay que volver a crear las bases. |
 
@@ -1005,6 +1007,8 @@ Revisión completa del código el 29/10/2026 (versión 1.3.1). Resumen de cómo 
 | Windows avisa al abrir `Instalar Full Cowl.bat` (SmartScreen) o el antivirus lo para | Es un script sin firmar: «Más información» → «Ejecutar de todas formas». Si el antivirus lo bloquea, añade la carpeta como excepción. |
 | «No he podido instalar Packer» | Sin Internet, o `releases.hashicorp.com` bloqueado. A mano: descarga el ZIP de Windows de la versión que dice el mensaje y copia `packer.exe` en `herramientas\packer`. |
 | La actualización dice «no coincide con su suma SHA-256» | La descarga llegó dañada: no se ha cambiado nada. Repite más tarde. |
+| `Actualizar.bat` dice que no puede copiar archivos / que hay algo en uso | Cierra Full Cowl solo y dice el archivo exacto (las versiones anteriores a esta mejora no lo hacen). Si sigue, cierra las consolas abiertas (Administrador de tareas → «Windows PowerShell»), espera un minuto (OneDrive o el antivirus pueden estar mirando la carpeta) y repite. Si la carpeta de Full Cowl está dentro de OneDrive, mejor moverla. El motivo exacto está en `full-cowl/estado/actualizar.log`. |
+| No encuentra ninguna ISO aunque estén en la carpeta | Hasta el 24/11/2026 solo se miraba la carpeta elegida, no sus subcarpetas: actualizar. Ahora se buscan hasta 3 niveles por debajo (no más: si están más hondas, elige una carpeta más cercana). Tienen que terminar en `.iso`. |
 | La ventana no se abre | Mirar `full-cowl/estado/interfaz.log`; el aviso indica el archivo y la línea. Si dice que hay errores en los archivos, `Actualizar.bat` los vuelve a traer. |
 | Windows sale en español aunque pedí inglés | La ISO solo trae español (el idioma de los menús viene de la ISO). El teclado, los formatos y la hora sí son los pedidos. Para Windows en inglés, usa una ISO en inglés y rehaz la base. |
 | *Conectar* dice «SSH no responde» en Kali | El servidor SSH estaba desactivado (Kali lo trae así y alguna actualización lo vuelve a apagar). Dentro de la máquina: `sudo systemctl enable --now ssh`. Las copias nuevas lo activan solas. |

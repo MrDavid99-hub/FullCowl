@@ -686,10 +686,35 @@ function Obtener-Sistemas {
     )
 }
 
+function Listar-Isos([string]$carpeta, [int]$niveles = 3) {
+    # Las .iso de la carpeta Y de sus subcarpetas (hasta 3 niveles: ISOs\Windows\Server\...), para quien las tiene
+    # ordenadas por sistema. No sigue enlaces ni uniones (podrían dar vueltas), salta las carpetas de sistema
+    # ($RECYCLE.BIN, System Volume Information) y las que no se pueden leer, y para tras 3000 carpetas por si
+    # alguien elige un disco entero. Devuelve FileInfo (con .Name y .FullName).
+    $res = New-Object System.Collections.Generic.List[System.IO.FileInfo]
+    if (-not $carpeta) { return @() }
+    try { $raiz = New-Object IO.DirectoryInfo($carpeta); if (-not $raiz.Exists) { return @() } } catch { return @() }
+    $pendientes = New-Object System.Collections.Generic.Queue[object]
+    $pendientes.Enqueue([pscustomobject]@{ Dir = $raiz; Nivel = 0 })
+    $vistas = 0
+    while ($pendientes.Count -gt 0 -and $vistas -lt 3000) {
+        $p = $pendientes.Dequeue(); $vistas++
+        try { foreach ($f in $p.Dir.EnumerateFiles('*.iso')) { if ($f.Extension -ieq '.iso') { $res.Add($f) } } } catch {}
+        if ($p.Nivel -ge $niveles) { continue }
+        try {
+            foreach ($sub in $p.Dir.EnumerateDirectories()) {
+                if ($sub.Attributes -band ([IO.FileAttributes]::ReparsePoint -bor [IO.FileAttributes]::System)) { continue }
+                $pendientes.Enqueue([pscustomobject]@{ Dir = $sub; Nivel = $p.Nivel + 1 })
+            }
+        } catch {}
+    }
+    return @($res)
+}
+
 function Buscar-IsosSistema($sistema) {
-    # ISO de la carpeta que encajan con el sistema; la preferida de config.ps1 primero
+    # ISO de la carpeta (y sus subcarpetas) que encajan con el sistema; la preferida de config.ps1 primero
     if (-not $Config.CarpetaISOs) { return @() }
-    $ctl = @(Get-ChildItem -LiteralPath $Config.CarpetaISOs -Filter *.iso -ErrorAction SilentlyContinue |
+    $ctl = @(Listar-Isos $Config.CarpetaISOs |
            Where-Object { $_.Name -match $sistema.Patron } | Sort-Object LastWriteTime -Descending)
     $pref = @($ctl | Where-Object { $_.Name -eq $sistema.ISO })
     return @($pref + @($ctl | Where-Object { $_.Name -ne $sistema.ISO }))
@@ -706,6 +731,11 @@ function Buscar-IsoTools([string]$nombre) {
     foreach ($dir in $sitios) {
         $ruta = Join-Path $dir $nombre
         if (Test-Path -LiteralPath $ruta) { return $ruta }
+    }
+    # También dentro de las subcarpetas de la de ISOs
+    if ($Config.CarpetaISOs) {
+        $enSub = @(Listar-Isos $Config.CarpetaISOs | Where-Object { $_.Name -ieq $nombre }) | Select-Object -First 1
+        if ($enSub) { return $enSub.FullName }
     }
     return $null
 }
