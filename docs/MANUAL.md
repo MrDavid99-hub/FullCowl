@@ -1,7 +1,7 @@
 # Manual técnico y de usuario
 
 
-> Versión del manual: **2.0.1** · Corresponde a la versión del programa que indica el archivo `VERSION`.
+> Versión del manual: **2.0.2** · Corresponde a la versión del programa que indica el archivo `VERSION`.
 > Los cambios de cada versión están en [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## Índice

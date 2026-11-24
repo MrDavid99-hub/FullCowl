@@ -2,6 +2,11 @@
 
 Versiones publicadas de Full Cowl. Cada una se puede descargar en la página de *Releases*.
 
+## 2.0.2 · 24/11/2026
+
+- **Arreglo:** las ISO guardadas en subcarpetas (por ejemplo `ISOs\Windows`, `ISOs\Linux`) no se encontraban. Ahora se buscan también dentro de las subcarpetas, hasta 3 niveles, en todas las pantallas.
+- **`Actualizar.bat`** cierra Full Cowl solo si está abierto y lo vuelve a abrir al terminar. Si no puede copiar algún archivo, lo reintenta y dice cuál y por qué.
+
 ## 2.0.1 · 24/11/2026
 
 - **Arreglo:** en un equipo recién instalado, Full Cowl podía no abrirse la primera vez y mostraba «No se puede enlazar el argumento con el parámetro 'Path' porque es una cadena vacía». Ya se abre con normalidad. Si instalaste la 2.0.0, usa «Buscar actualizaciones» o vuelve a ejecutar el comando de instalación.
