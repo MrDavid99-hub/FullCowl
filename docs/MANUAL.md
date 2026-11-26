@@ -1,7 +1,7 @@
 # Manual técnico y de usuario
 
 
-> Versión del manual: **2.0.2** · Corresponde a la versión del programa que indica el archivo `VERSION`.
+> Versión del manual: **2.0.3** · Corresponde a la versión del programa que indica el archivo `VERSION`.
 > Los cambios de cada versión están en [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## Índice
@@ -88,8 +88,11 @@ icono** (se pueden arrastrar al escritorio o anclar a la barra de tareas):
 | `full-cowl\Full Cowl.lnk` | Full Cowl, sin ninguna consola (desde la 2.0 es la única ventana) | emblema de Full Cowl |
 | `Actualizar.lnk` | `Actualizar.bat` | flechas en círculo (turquesa) |
 
-Los que abren scripts ocultos usan `conhost.exe --headless`, para que no salga ninguna consola
-(tampoco con Windows Terminal como consola predeterminada). Los crea y corrige `crear-accesos.ps1`,
+Full Cowl se abre con una **consola de PowerShell minimizada** en la barra de tareas, titulada «Full Cowl (no cierres
+esta ventana…)»: es normal, y si se cierra, se cierra Full Cowl. Antes se abría sin ninguna consola, pero eso (PowerShell
+oculto saltándose la directiva de ejecución) es lo mismo que hace cierto malware, y antivirus como Check Point lo bloqueaban
+en los equipos de los institutos. La directiva de ejecución se deja en `RemoteSigned` para tu usuario (la recomendada por
+Microsoft, sin pedir administrador). Los crea y corrige `crear-accesos.ps1`,
 que se ejecuta al abrir Full Cowl (las dos ventanas) y al final de
 `Actualizar.bat`. También arregla los del escritorio y los anclados a la barra de tareas que abran
 estas herramientas (aunque apunten a una carpeta antigua), y refresca la caché de iconos de Windows.
@@ -1009,6 +1012,7 @@ Revisión completa del código el 29/10/2026 (versión 1.3.1). Resumen de cómo 
 | La actualización dice «no coincide con su suma SHA-256» | La descarga llegó dañada: no se ha cambiado nada. Repite más tarde. |
 | `Actualizar.bat` dice que no puede copiar archivos / que hay algo en uso | Cierra Full Cowl solo y dice el archivo exacto (las versiones anteriores a esta mejora no lo hacen). Si sigue, cierra las consolas abiertas (Administrador de tareas → «Windows PowerShell»), espera un minuto (OneDrive o el antivirus pueden estar mirando la carpeta) y repite. Si la carpeta de Full Cowl está dentro de OneDrive, mejor moverla. El motivo exacto está en `full-cowl/estado/actualizar.log`. |
 | No encuentra ninguna ISO aunque estén en la carpeta | Hasta el 24/11/2026 solo se miraba la carpeta elegida, no sus subcarpetas: actualizar. Ahora se buscan hasta 3 niveles por debajo (no más: si están más hondas, elige una carpeta más cercana). Tienen que terminar en `.iso`. |
+| En un equipo de instituto con antivirus gestionado (Check Point, «Endpoint Security») Full Cowl no se abre o sale «Este script contiene elementos malintencionados» | Es un falso positivo. Desde la 2.0.3 Full Cowl ya no se abre de la forma que lo disparaba; si aun así lo bloquea, solo lo puede arreglar quien gestiona el antivirus del centro, añadiendo una excepción para la carpeta de Full Cowl. En el registro del antivirus sale la regla que lo para (p. ej. `apt.win.muddywater`): pásasela. |
 | La ventana no se abre | Mirar `full-cowl/estado/interfaz.log`; el aviso indica el archivo y la línea. Si dice que hay errores en los archivos, `Actualizar.bat` los vuelve a traer. |
 | Windows sale en español aunque pedí inglés | La ISO solo trae español (el idioma de los menús viene de la ISO). El teclado, los formatos y la hora sí son los pedidos. Para Windows en inglés, usa una ISO en inglés y rehaz la base. |
 | *Conectar* dice «SSH no responde» en Kali | El servidor SSH estaba desactivado (Kali lo trae así y alguna actualización lo vuelve a apagar). Dentro de la máquina: `sudo systemctl enable --now ssh`. Las copias nuevas lo activan solas. |

@@ -244,9 +244,9 @@ function Reabrir-FullCowl {
     $conhost = Join-Path $env:SystemRoot 'System32\conhost.exe'
     $ps = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
     $abrir = Join-Path $raiz 'full-cowl\abrir-nueva.ps1'
-    $psi = New-Object System.Diagnostics.ProcessStartInfo($conhost, "--headless `"$ps`" -NoProfile -ExecutionPolicy Bypass -STA -File `"$abrir`"")
-    $psi.UseShellExecute = $false; $psi.CreateNoWindow = $true; $psi.WorkingDirectory = (Join-Path $raiz 'full-cowl')
-    try { [void][System.Diagnostics.Process]::Start($psi) } catch { Registro "No se pudo volver a abrir Full Cowl: $($_.Exception.Message)" }
+    # Igual que el acceso directo: consola clásica minimizada y sin -ExecutionPolicy Bypass (ver crear-accesos.ps1)
+    try { Start-Process -FilePath $conhost -ArgumentList "`"$ps`" -NoProfile -STA -File `"$abrir`"" -WorkingDirectory (Join-Path $raiz 'full-cowl') -WindowStyle Minimized }
+    catch { Registro "No se pudo volver a abrir Full Cowl: $($_.Exception.Message)" }
 }
 
 # ================================================================ modos

@@ -12,15 +12,28 @@ $ErrorActionPreference = 'SilentlyContinue'
 $raiz = $PSScriptRoot
 $ws = New-Object -ComObject WScript.Shell
 $powershell = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
-# Los scripts ocultos se abren con conhost --headless: así no sale ninguna consola (con
-# -WindowStyle Hidden, si Windows Terminal es la consola predeterminada, la ventana sale igual)
+# Los scripts se abren en una consola clásica (conhost) MINIMIZADA, a la vista, y sin «-ExecutionPolicy Bypass».
+# Antes iban con «conhost --headless … -ExecutionPolicy Bypass» (sin ninguna consola), pero un acceso directo que abre
+# PowerShell oculto saltándose la directiva es justo la receta del grupo MuddyWater, y Check Point (Behavioral Guard,
+# regla apt.win.muddywater) lo bloqueaba en los equipos de aula (26/11/2026). conhost y no powershell.exe a secas:
+# así se abre en la consola clásica y no en una pestaña de Windows Terminal.
 $conhost = Join-Path $env:SystemRoot 'System32\conhost.exe'
+
+# Directiva de ejecución: la estándar que recomienda Microsoft para el usuario (RemoteSigned, sin pedir administrador),
+# solo si la actual no deja ejecutar scripts locales. Si la manda una directiva de grupo, no se puede cambiar (ni se intenta forzar).
+try {
+    if (@('Restricted', 'AllSigned', 'Undefined') -contains [string](Get-ExecutionPolicy)) {
+        Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop
+    }
+} catch {}
+# Y se quita la marca de «descargado de internet» a los scripts (si el ZIP se bajó con el navegador, RemoteSigned los pararía)
+try { Get-ChildItem -LiteralPath $raiz -Recurse -File -Include *.ps1, *.psm1 -ErrorAction SilentlyContinue | Unblock-File -ErrorAction SilentlyContinue } catch {}
 
 # Lnk = dónde va el acceso · Bat = lo que abre (o Ps1 = script de PowerShell oculto) · Ventana: 1 normal, 7 minimizada
 # Icono = archivo de iconos\ (o IconoRuta = otro .ico del repositorio)
 $accesos = @(
     @{ Lnk = 'Actualizar.lnk';                         Bat = 'Actualizar.bat';                 Icono = 'actualizar';     Ventana = 1; Desc = 'Traer la última versión de GitHub' }
-    @{ Lnk = 'full-cowl\Full Cowl.lnk'; Ps1 = 'full-cowl\abrir-nueva.ps1'; IconoRuta = 'full-cowl\recursos\full-cowl-icono-4.ico'; Ventana = 1; Desc = 'Full Cowl - máquinas virtuales de VMware' }
+    @{ Lnk = 'full-cowl\Full Cowl.lnk'; Ps1 = 'full-cowl\abrir-nueva.ps1'; IconoRuta = 'full-cowl\recursos\full-cowl-icono-4.ico'; Ventana = 7; Desc = 'Full Cowl - máquinas virtuales de VMware' }
 )
 
 function Poner($acc, $a) {
@@ -28,14 +41,14 @@ function Poner($acc, $a) {
     $icono = $(if ($a.IconoRuta) { Join-Path $raiz $a.IconoRuta } else { Join-Path $raiz "iconos\$($a.Icono).ico" }) + ',0'
     if ($a.Ps1) {
         $destino = $conhost
-        $args2 = "--headless `"$powershell`" -NoProfile -ExecutionPolicy Bypass -STA -File `"$(Join-Path $raiz $a.Ps1)`""
+        $args2 = "`"$powershell`" -NoProfile -STA -File `"$(Join-Path $raiz $a.Ps1)`""
         $dir = Split-Path (Join-Path $raiz $a.Ps1)
     } else {
         $destino = Join-Path $raiz $a.Bat
         $args2 = ''
         $dir = Split-Path $destino
     }
-    if ($acc.TargetPath -eq $destino -and $acc.Arguments -eq $args2 -and $acc.IconLocation -eq $icono -and $acc.WorkingDirectory -eq $dir) { return $false }
+    if ($acc.TargetPath -eq $destino -and $acc.Arguments -eq $args2 -and $acc.IconLocation -eq $icono -and $acc.WorkingDirectory -eq $dir -and $acc.WindowStyle -eq $a.Ventana) { return $false }
     $acc.TargetPath = $destino; $acc.Arguments = $args2; $acc.WorkingDirectory = $dir
     $acc.IconLocation = $icono; $acc.WindowStyle = $a.Ventana; $acc.Description = $a.Desc
     $acc.Save()
