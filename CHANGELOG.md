@@ -2,10 +2,6 @@
 
 Versiones publicadas de Full Cowl. Cada una se puede descargar en la página de *Releases*.
 
-## 2.0.3 · 26/11/2026
-
-- **Cambio en cómo se abre Full Cowl:** antes se abría sin ninguna consola, pero algunos antivirus de empresa (Check Point en equipos de institutos) confundían esa forma de arrancar con un malware conocido y lo bloqueaban. Ahora se abre con una consola de PowerShell **minimizada** en la barra de tareas (no la cierres: es la de Full Cowl) y sin saltarse la directiva de ejecución; el instalador deja la directiva recomendada por Microsoft (`RemoteSigned`) para tu usuario. Si en tu equipo el antivirus lo sigue bloqueando, quien lo gestione puede añadir una excepción para la carpeta de Full Cowl.
-
 ## 2.0.2 · 24/11/2026
 
 - **Arreglo:** las ISO guardadas en subcarpetas (por ejemplo `ISOs\Windows`, `ISOs\Linux`) no se encontraban. Ahora se buscan también dentro de las subcarpetas, hasta 3 niveles, en todas las pantallas.

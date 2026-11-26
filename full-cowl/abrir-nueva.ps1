@@ -1,8 +1,6 @@
 ﻿# Abre Full Cowl (ventana-nueva.ps1). Antes revisa que no haya errores de escritura en sus
 # scripts ni en sus pantallas (.xaml): si los hay, los muestra en un aviso y los apunta en
 # estado\interfaz.log (si no, la ventana simplemente no aparecería, porque se abre sin consola).
-# La consola de PowerShell queda minimizada en la barra de tareas mientras Full Cowl está abierto: que diga qué es
-try { $Host.UI.RawUI.WindowTitle = 'Full Cowl (no cierres esta ventana: cierra Full Cowl)' } catch {}
 $errores = @()
 $scripts = @((Join-Path $PSScriptRoot 'ventana-nueva.ps1'), (Join-Path $PSScriptRoot 'comun.ps1'), (Join-Path $PSScriptRoot 'config.ps1'))
 $scripts += @(Get-ChildItem (Join-Path $PSScriptRoot 'interfaz') -Filter *.ps1 | ForEach-Object { $_.FullName })

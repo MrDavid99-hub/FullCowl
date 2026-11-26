@@ -149,9 +149,7 @@ try {
         if (-not $dirLnk -or -not (Test-Path -LiteralPath $dirLnk)) { continue }
         $acc = $ws.CreateShortcut((Join-Path $dirLnk 'Full Cowl.lnk'))
         $acc.TargetPath = $conhost
-        # Consola clásica minimizada y sin -ExecutionPolicy Bypass (ver crear-accesos.ps1: Check Point lo tomaba por MuddyWater)
-        $acc.Arguments = "`"$ps`" -NoProfile -STA -File `"$abrir`""
-        $acc.WindowStyle = 7
+        $acc.Arguments = "--headless `"$ps`" -NoProfile -ExecutionPolicy Bypass -STA -File `"$abrir`""
         $acc.WorkingDirectory = Split-Path $abrir
         $acc.IconLocation = (Join-Path $Carpeta 'full-cowl\recursos\full-cowl-icono-4.ico') + ',0'
         $acc.Description = 'Full Cowl - máquinas virtuales de VMware'
@@ -167,7 +165,7 @@ Decir $(if ($yaInstalado) { "Listo: Full Cowl $version ya estaba instalado y se 
 Decir 'Para quitarlo: «Desinstalar Full Cowl.bat» en su carpeta (no toca tus máquinas).' 'DarkGray'
 if (-not $Silencioso) {
     if ((Preguntar '¿Abrir Full Cowl ahora? [S/n]') -notlike 'n*') {
-        Start-Process -FilePath $conhost -ArgumentList "`"$ps`" -NoProfile -STA -File `"$abrir`"" -WorkingDirectory (Split-Path $abrir) -WindowStyle Minimized
+        Start-Process -FilePath $conhost -ArgumentList "--headless `"$ps`" -NoProfile -ExecutionPolicy Bypass -STA -File `"$abrir`"" -WorkingDirectory (Split-Path $abrir)
     }
 }
 exit 0
